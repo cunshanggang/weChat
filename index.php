@@ -56,7 +56,12 @@ class wechatCallbackapiTest
             if(!empty( $keyword ))//如果用户端微信发来的文本内容不为空，执行46--51否则52--53
             {
                 $msgType = "text";//回复文本信息类型为text型，变量类型为msgType
-                $contentStr = "Welcome to wechat world!";//我们进行文本输入的内容，变量名为contentStr，如果你要更改回复信息，就在这儿
+                //如果用户输入的关键字为：ok则返回Hello
+                if($keyword == 'ok') {
+                    $contentStr = 'Hello';
+                }else{
+                    $contentStr = "Welcome to wechat world!";//我们进行文本输入的内容，变量名为contentStr，如果你要更改回复信息，就在这儿
+                }
                 $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);//将XML格式中的变量分别赋值。注意sprintf函数
                 echo $resultStr;//输出回复信息，即发送微信
             }else{
