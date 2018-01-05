@@ -59,8 +59,6 @@ class wechatCallbackapiTest
             //43行为回复微信的内容
             //44行为是否星标微信
             //XML格式文本结束符号
-            if(!empty($keyword))//如果用户端微信发来的文本内容不为空，执行46--51否则52--53
-            {
                 //如果用户输入的关键字为：ok则返回Hello
                 if($keyword == 'ok') {
                     $contentStr = 'Hello';
@@ -73,10 +71,6 @@ class wechatCallbackapiTest
                     echo $resultStr;//输出回复信息，即发送微信
                     exit();
                 }
-            }else{
-                echo "Input something...";//不发送到微信端，只是测试使用
-            }
-
         }else {
             echo "";//回复为空，无意义，调试用
             exit;
