@@ -53,15 +53,15 @@ class wechatCallbackapiTest
             //43行为回复微信的内容
             //44行为是否星标微信
             //XML格式文本结束符号
-            if(!empty( $keyword ))//如果用户端微信发来的文本内容不为空，执行46--51否则52--53
+            if(!empty($keyword))//如果用户端微信发来的文本内容不为空，执行46--51否则52--53
             {
-                $msgType = "text";//回复文本信息类型为text型，变量类型为msgType
                 //如果用户输入的关键字为：ok则返回Hello
                 if($keyword == 'ok') {
                     $contentStr = 'Hello';
                 }else{
                     $contentStr = "Welcome to wechat world!";//我们进行文本输入的内容，变量名为contentStr，如果你要更改回复信息，就在这儿
                 }
+                $msgType = "text";//回复文本信息类型为text型，变量类型为msgType
                 $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);//将XML格式中的变量分别赋值。注意sprintf函数
                 echo $resultStr;//输出回复信息，即发送微信
             }else{
@@ -86,7 +86,7 @@ class wechatCallbackapiTest
         $tmpStr = implode( $tmpArr );//字典排序
         $tmpStr = sha1( $tmpStr );//shal加密
         //tmpStr与signature值相同，返回真，否则返回假
-        if( $tmpStr == $signature ){
+        if($tmpStr == $signature){
             return true;
         }else{
             return false;
