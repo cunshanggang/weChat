@@ -2,7 +2,7 @@
 /**
  * wechat php test
  */
-
+header('content-type:text/html;charset=utf-8');
 //define your token
 define("TOKEN", "james");
 $wechatObj = new wechatCallbackapiTest();//将11行的class类实例化
