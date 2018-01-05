@@ -1,100 +1,92 @@
 <?php
 /**
- * wechat php test
+ * Created by PhpStorm.
+ * User: Administrator
+ * Date: 2018/1/5
+ * Time: 14:51
  */
 header('content-type:text/html;charset=utf-8');
-//define your token
-define("TOKEN", "james");
-$wechatObj = new wechatCallbackapiTest();//将11行的class类实例化
-//处理返回的信息
-if($_GET['echostr']) {
-    $wechatObj->valid();
+
+define("TOKEN", "james"); //define your token
+$wx = new wechatCallbackapiTest();
+
+if($_GET['echostr']){
+    $wx->valid(); //如果发来了echostr则进行验证
 }else{
-    $wechatObj->responseMsg();
+    $wx->responseMsg(); //如果没有echostr，则返回消息
 }
 
-//$wechatObj->valid();//使用-》访问类中valid方法，用来验证开发模式
-//exit;
-//11--23行代码为签名及接口验证。
-class wechatCallbackapiTest
-{
-    public function valid()//验证接口的方法
-    {
-        $echoStr = $_GET["echostr"];//从微信用户端获取一个随机字符赋予变量echostr
 
-        //valid signature , option访问地61行的checkSignature签名验证方法，如果签名一致，输出变量echostr，完整验证配置接口的操作
-        if($this->checkSignature()){
+class wechatCallbackapiTest{
+
+    public function valid(){ //valid signature , option
+
+        $echoStr = $_GET["echostr"];
+        if($this->checkSignature()){ //调用验证字段
             echo $echoStr;
             exit;
         }
     }
-    //公有的responseMsg的方法，是我们回复微信的关键。以后的章节修改代码就是修改这个。
-    public function responseMsg()
-    {
+
+    public function responseMsg(){
+
         //get post data, May be due to the different environments
-        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];//将用户端放松的数据保存到变量postStr中，由于微信端发送的都是xml，使用postStr无法解析，故使用$GLOBALS["HTTP_RAW_POST_DATA"]获取
+        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"]; //接收微信发来的XML数据
 
-        //extract post data如果用户端数据不为空，执行30-55否则56-58
-        if (!empty($postStr)){
+        //extract post data
+        if(!empty($postStr)){
 
-            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);//将postStr变量进行解析并赋予变量postObj。simplexml_load_string（）函数是php中一个解析XML的函数，SimpleXMLElement为新对象的类，LIBXML_NOCDATA表示将CDATA设置为文本节点，CDATA标签中的文本XML不进行解析
-            $fromUsername = $postObj->FromUserName;//将微信用户端的用户名赋予变量FromUserName
-            $toUsername = $postObj->ToUserName;//将你的微信公众账号ID赋予变量ToUserName
-            $keyword = trim($postObj->Content);//将用户微信发来的文本内容去掉空格后赋予变量keyword
-            $time = time();//将系统时间赋予变量time
-            $msgType = "text";//回复文本信息类型为text型，变量类型为msgType
-            //构建XML格式的文本赋予变量textTpl，注意XML格式为微信内容固定格式，详见文档
-            $textTpl = "<xml>  
-                            <ToUserName><![CDATA[%s]]></ToUserName>  
-                            <FromUserName><![CDATA[%s]]></FromUserName>  
-                            <CreateTime>%s</CreateTime>  
-                            <MsgType><![CDATA[%s]]></MsgType>  
-                            <Content><![CDATA[%s]]></Content>  
-                            <FuncFlag>0</FuncFlag>  
-                            </xml>";
-            //39行，%s表示要转换成字符的数据类型，CDATA表示不转义
-            //40行为微信来源方
-            //41行为系统时间
-            //42行为回复微信的信息类型
-            //43行为回复微信的内容
-            //44行为是否星标微信
-            //XML格式文本结束符号
-                //如果用户输入的关键字为：ok则返回Hello
-                if($keyword == 'ok') {
-                    $contentStr = 'Hello';
-                    $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);//将XML格式中的变量分别赋值。注意sprintf函数
-                    echo $resultStr;//输出回复信息，即发送微信
-                    exit();
-                }else{
-                    $contentStr = "Welcome to wechat world!";//我们进行文本输入的内容，变量名为contentStr，如果你要更改回复信息，就在这儿
-                    $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);//将XML格式中的变量分别赋值。注意sprintf函数
-                    echo $resultStr;//输出回复信息，即发送微信
-                    exit();
-                }
+            //解析post来的XML为一个对象$postObj
+            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+
+            $fromUsername = $postObj->FromUserName; //请求消息的用户
+            $toUsername = $postObj->ToUserName; //"我"的公众号id
+            $keyword = trim($postObj->Content); //消息内容
+            $time = time(); //时间戳
+            $msgtype = 'text'; //消息类型：文本
+            $textTpl = "<xml>
+						<ToUserName><![CDATA[%s]]></ToUserName>
+						<FromUserName><![CDATA[%s]]></FromUserName>
+						<CreateTime>%s</CreateTime>
+						<MsgType><![CDATA[%s]]></MsgType>
+						<Content><![CDATA[%s]]></Content>
+						</xml>";
+
+            if($keyword == 'hehe'){
+                $contentStr = 'hello world!!!';
+                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgtype, $contentStr);
+                echo $resultStr;
+                exit();
+            }else{
+                $contentStr = '输入hehe试试';
+                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgtype, $contentStr);
+                echo $resultStr;
+                exit();
+            }
+
         }else {
-            echo "";//回复为空，无意义，调试用
+            echo "";
             exit;
         }
     }
-    //签名验证程序    ，checkSignature被18行调用。官方加密、校验流程：将token，timestamp，nonce这三个参数进行字典序排序，然后将这三个参数字符串拼接成一个字符串惊喜shal加密，开发者获得加密后的字符串可以与signature对比，表示该请求来源于微信。
-    private function checkSignature()
-    {
-        $signature = $_GET["signature"];//从用户端获取签名赋予变量signature
-        $timestamp = $_GET["timestamp"];//从用户端获取时间戳赋予变量timestamp
-        $nonce = $_GET["nonce"];    //从用户端获取随机数赋予变量nonce
 
-        $token = TOKEN;//将常量token赋予变量token
-        $tmpArr = array($token, $timestamp, $nonce);//简历数组变量tmpArr
-        sort($tmpArr, SORT_STRING);//新建排序
-        $tmpStr = implode( $tmpArr );//字典排序
-        $tmpStr = sha1( $tmpStr );//shal加密
-        //tmpStr与signature值相同，返回真，否则返回假
-        if($tmpStr == $signature){
+    //验证字段
+    private function checkSignature(){
+
+        $signature = $_GET["signature"];
+        $timestamp = $_GET["timestamp"];
+        $nonce = $_GET["nonce"];
+
+        $token = TOKEN;
+        $tmpArr = array($token, $timestamp, $nonce);
+        sort($tmpArr);
+        $tmpStr = implode( $tmpArr );
+        $tmpStr = sha1( $tmpStr );
+
+        if( $tmpStr == $signature ){
             return true;
         }else{
             return false;
         }
     }
 }
-
-?>
