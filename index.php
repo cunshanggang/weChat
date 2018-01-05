@@ -3,65 +3,61 @@
  * Created by PhpStorm.
  * User: Administrator
  * Date: 2018/1/5
- * Time: 14:51
+ * Time: 15:44
  */
-header('content-type:text/html;charset=utf-8');
+/**
+ * wechat php test
+ */
 
-define("TOKEN", "james"); //define your token
-$wx = new wechatCallbackapiTest();
+//define your token
+define("TOKEN", "james");
+$wechatObj = new wechatCallbackapiTest();
+$wechatObj->valid();
 
-if($_GET['echostr']){
-    $wx->valid(); //如果发来了echostr则进行验证
-}else{
-    $wx->responseMsg(); //如果没有echostr，则返回消息
-}
-
-
-class wechatCallbackapiTest{
-
-    public function valid(){ //valid signature , option
-
+class wechatCallbackapiTest
+{
+    public function valid()
+    {
         $echoStr = $_GET["echostr"];
-        if($this->checkSignature()){ //调用验证字段
+
+        //valid signature , option
+        if($this->checkSignature()){
             echo $echoStr;
             exit;
         }
     }
 
-    public function responseMsg(){
-
+    public function responseMsg()
+    {
         //get post data, May be due to the different environments
-        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"]; //接收微信发来的XML数据
+        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
 
         //extract post data
-        if(!empty($postStr)){
-
-            //解析post来的XML为一个对象$postObj
+        if (!empty($postStr)){
+            /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
+               the best way is to check the validity of xml by yourself */
+            libxml_disable_entity_loader(true);
             $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-
-            $fromUsername = $postObj->FromUserName; //请求消息的用户
-            $toUsername = $postObj->ToUserName; //"我"的公众号id
-            $keyword = trim($postObj->Content); //消息内容
-            $time = time(); //时间戳
-            $msgtype = 'text'; //消息类型：文本
-            $textTpl = "<xml>
-						<ToUserName><![CDATA[%s]]></ToUserName>
-						<FromUserName><![CDATA[%s]]></FromUserName>
-						<CreateTime>%s</CreateTime>
-						<MsgType><![CDATA[%s]]></MsgType>
-						<Content><![CDATA[%s]]></Content>
-						</xml>";
-
-            if($keyword == 'hehe'){
-                $contentStr = 'hello world!!!';
-                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgtype, $contentStr);
+            $fromUsername = $postObj->FromUserName;
+            $toUsername = $postObj->ToUserName;
+            $keyword = trim($postObj->Content);
+            $time = time();
+            $textTpl = "<xml>  
+                            <ToUserName><![CDATA[%s]]></ToUserName>  
+                            <FromUserName><![CDATA[%s]]></FromUserName>  
+                            <CreateTime>%s</CreateTime>  
+                            <MsgType><![CDATA[%s]]></MsgType>  
+                            <Content><![CDATA[%s]]></Content>  
+                            <FuncFlag>0</FuncFlag>  
+                            </xml>";
+            if(!empty( $keyword ))
+            {
+                $msgType = "text";
+                $contentStr = "Welcome to wechat world!";
+                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
                 echo $resultStr;
-                exit();
             }else{
-                $contentStr = '输入hehe试试';
-                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgtype, $contentStr);
-                echo $resultStr;
-                exit();
+                echo "Input something...";
             }
 
         }else {
@@ -70,8 +66,12 @@ class wechatCallbackapiTest{
         }
     }
 
-    //验证字段
-    private function checkSignature(){
+    private function checkSignature()
+    {
+        // you must define TOKEN by yourself
+        if (!defined("TOKEN")) {
+            throw new Exception('TOKEN is not defined!');
+        }
 
         $signature = $_GET["signature"];
         $timestamp = $_GET["timestamp"];
@@ -79,7 +79,8 @@ class wechatCallbackapiTest{
 
         $token = TOKEN;
         $tmpArr = array($token, $timestamp, $nonce);
-        sort($tmpArr);
+        // use SORT_STRING rule
+        sort($tmpArr, SORT_STRING);
         $tmpStr = implode( $tmpArr );
         $tmpStr = sha1( $tmpStr );
 
@@ -90,3 +91,4 @@ class wechatCallbackapiTest{
         }
     }
 }
+?>
