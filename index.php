@@ -6,7 +6,7 @@
  * Time: 22:38
  */
 header('Content-type:text');
-define("TOKEN", "weixin");
+define("TOKEN", "james");
 
 $wechatObj = new wechatCallbackapiTest();
 if (!isset($_GET['echostr'])) {
