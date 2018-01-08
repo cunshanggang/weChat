@@ -2,99 +2,104 @@
 /**
  * Created by PhpStorm.
  * User: Administrator
- * Date: 2018/1/5
- * Time: 15:44
+ * Date: 2018/1/8
+ * Time: 22:06
  */
-/**
- * wechat php test
- */
+//定义TOKEN
+define('TOKEN','james');
 
-//define your token
-define("TOKEN", "james");
-$wechatObj = new wechatCallbackapiTest();
-//$wechatObj->valid();
-//exit;
-$wechatObj->responseMsg();
-
-class wechatCallbackapiTest
+//把参数校验逻辑封装在checkSignature函数中
+function checkSignature()
 {
-    public function valid()
-    {
-        $echoStr = $_GET["echostr"];
+    //获取GET参数
+    $signature = $_GET['signature'];
+    $nonce = $_GET['nonce'];
+    $timestamp = $_GET['timestamp'];
 
-        //valid signature , option
-        if($this->checkSignature()){
-            echo $echoStr;
-            exit;
-        }
+    //把nonce、timestamp和TOKEN组装到数组里并做排序
+    $tmpArr = array($timestamp,$nonce,TOKEN);
+    sort($tmpArr);
+
+    //把数组中的元素合并成字符串
+    $tmpStr = implode($tmpArr);
+
+    //sha1加密
+    $tmpStr = sha1($tmpStr);
+    //判断加密后的字符串是否和signature相等
+    if($tmpStr == $signature)
+    {
+        //相等就返回ture
+        return true;
     }
+    return false;
+}
 
-    public function responseMsg()
+if(checkSignature())
+{
+    //获取echostr
+    $echostr = $_GET['echostr'];
+    if($echostr)
     {
-        //get post data, May be due to the different environments
-        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-
-        //extract post data
-        if (!empty($postStr)){
-            /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
-               the best way is to check the validity of xml by yourself */
-            libxml_disable_entity_loader(true);
-            $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
-            $fromUsername = $postObj->FromUserName;
-            echo $fromUsername;
-            exit;
-            $toUsername = $postObj->ToUserName;
-            $keyword = trim($postObj->Content);
-            $time = time();
-            $textTpl = "<xml>  
-<ToUserName><![CDATA[%s]]></ToUserName>  
-<FromUserName><![CDATA[%s]]></FromUserName>  
-<CreateTime>%s</CreateTime>  
-<MsgType><![CDATA[%s]]></MsgType>  
-<Content><![CDATA[%s]]></Content>  
-<FuncFlag>0</FuncFlag>  
-</xml>";
-            if(!empty( $keyword ))
-            {
-                $msgType = "text";
-                $contentStr = "Welcome to wechat world!";
-                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-                echo $resultStr;
-                exit;
-            }else{
-                echo "Input something...";
-                exit;
-            }
-        }
-//        else {
-//            echo "";
-//            exit;
-//        }
-    }
-
-    private function checkSignature()
-    {
-        // you must define TOKEN by yourself
-        if (!defined("TOKEN")) {
-            throw new Exception('TOKEN is not defined!');
-        }
-
-        $signature = $_GET["signature"];
-        $timestamp = $_GET["timestamp"];
-        $nonce = $_GET["nonce"];
-
-        $token = TOKEN;
-        $tmpArr = array($token, $timestamp, $nonce);
-        // use SORT_STRING rule
-        sort($tmpArr, SORT_STRING);
-        $tmpStr = implode( $tmpArr );
-        $tmpStr = sha1( $tmpStr );
-
-        if( $tmpStr == $signature ){
-            return true;
-        }else{
-            return false;
-        }
+        echo $echostr;
+        exit();
     }
 }
-?>
+
+
+//获取POST数据
+$postData = $HTTP_RAW_POST_DATA;
+
+//判断POST数据是否为空
+if(!$postData)
+{
+    echo "error!";
+    exit;
+}
+
+//解析XML数据
+$xmlObj = simplexml_load_string($postData,'SimpleXMLElement',LIBXML_NOCDATA);
+
+if(!$xmlObj)
+{
+    echo "error!";
+    exit;
+}
+
+//获取FromUserName
+$fromUserName = $xmlObj->FromUserName;
+
+//获取ToUserName
+$toUserName = $xmlObj->ToUserName;
+
+//获取MsgType
+$msgType = $xmlObj->MsgType;
+
+if('text' == $msgType)
+{
+    //用户输入的是文本，则获取用户文本的输入
+    $content = $xmlObj->Content;
+    //把用户输入的消息作为输出消息
+    $retMsg = $content;
+}
+else
+{
+    //如果消息类型不是文本,输出错误提示消息
+    $retMsg = "只支持文本消息";
+}
+if('text' == $msgType)
+{
+    //输出消息的XML模板
+    $retTmp = "<xml>
+				<ToUserName><![CDATA[%s]]></ToUserName>
+				<FromUserName><![CDATA[%s]]></FromUserName>
+				<CreateTime>%s</CreateTime>
+				<MsgType><![CDATA[text]]></MsgType>
+				<Content><![CDATA[%s]]></Content>
+				</xml>";
+}
+
+//对消息模板中的通配符进行替换
+$resultStr = sprintf($retTmp,$fromUserName,$toUserName,time(),$retMsg);
+
+//输出XML描述的消息
+echo  $resultStr;
