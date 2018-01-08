@@ -49,23 +49,24 @@ class wechatCallbackapiTest
     <FromUserName><![CDATA[%s]]></FromUserName>  
     <CreateTime>%s</CreateTime>  
     <MsgType><![CDATA[%s]]></MsgType>  
-    <Content><![CDATA[%s]]></Content>  
+    <Content><![CDATA[%s]]></Content>
+    <FuncFlag>0</FuncFlag>  
 </xml>";
             if(!empty( $keyword ))
             {
                 $msgType = "text";
                 $contentStr = "Welcome to wechat world!";
                 $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-                echo $resultStr;
-                exit;
+                return $resultStr;
+//                exit;
             }else{
-                echo "Input something...";
-                exit;
+                return "Input something...";
+//                exit;
             }
         }
         else {
-            echo "";
-            exit;
+            return "";
+//            exit;
         }
     }
 
