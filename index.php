@@ -58,8 +58,10 @@ class wechatCallbackapiTest
                 $contentStr = "Welcome to wechat world!";
                 $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
                 echo $resultStr;
+                exit();
             }else{
                 echo "Input something...";
+                exit();
             }
         }
 //        else {
