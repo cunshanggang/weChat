@@ -52,24 +52,20 @@ class wechatCallbackapiTest
 <Content><![CDATA[%s]]></Content>  
 <FuncFlag>0</FuncFlag>  
 </xml>";
-            $msgType = "text";
-            $contentStr = "Welcome to wechat world!";
-            $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-            echo $resultStr;
-//            if(!empty( $keyword ))
-//            {
-//                $msgType = "text";
-//                $contentStr = "Welcome to wechat world!";
-//                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
-//                echo $resultStr;
-//            }else{
-//                echo "Input something...";
-//            }
-
-        }else {
-            echo "";
-            exit;
+            if(!empty( $keyword ))
+            {
+                $msgType = "text";
+                $contentStr = "Welcome to wechat world!";
+                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                echo $resultStr;
+            }else{
+                echo "Input something...";
+            }
         }
+//        else {
+//            echo "";
+//            exit;
+//        }
     }
 
     private function checkSignature()
