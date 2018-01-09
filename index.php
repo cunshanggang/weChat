@@ -38,8 +38,6 @@ class wechatCallbackapiTest
         if (!empty($postStr)){
             /* libxml_disable_entity_loader is to prevent XML eXternal Entity Injection,
                the best way is to check the validity of xml by yourself */
-            echo 'success';
-            exit;
             libxml_disable_entity_loader(true);
             $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
             $fromUsername = $postObj->FromUserName;
@@ -52,12 +50,14 @@ class wechatCallbackapiTest
 <CreateTime>%s</CreateTime>  
 <MsgType><![CDATA[%s]]></MsgType>  
 <Content><![CDATA[%s]]></Content>
+<FuncFlag>%d</FuncFlag>
 </xml>";
             if(!empty( $keyword ))
             {
                 $msgType = "text";
                 $contentStr = "Welcome to wechat world!";
-                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                $flag = 0;
+                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr, $flag);
                 echo $resultStr;
                 exit;
             }else{
