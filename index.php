@@ -32,7 +32,7 @@ class wechatCallbackapiTest
     {
         //get post data, May be due to the different environments
 //        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-        ini_set('always_populate_raw_post_data',-1);
+        //ini_set('always_populate_raw_post_data',-1);
         $postStr = file_get_contents("php://input");
         file_put_contents("error.log",$postStr.PHP_EOL,FILE_APPEND);
 
