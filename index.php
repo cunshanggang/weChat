@@ -8,7 +8,7 @@
 /**
  * wechat php test
  */
-ini_set('always_populate_raw_post_data',-1);
+ini_set('always_populate_raw_post_data',0);
 //define your token
 define("TOKEN", "james");
 $wechatObj = new wechatCallbackapiTest();
@@ -32,8 +32,8 @@ class wechatCallbackapiTest
     public function responseMsg()
     {
         //get post data, May be due to the different environments
-//        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
-        $postStr = file_get_contents("php://input");
+        $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
+//        $postStr = file_get_contents("php://input");
 
         //extract post data
         if (!empty($postStr)){
