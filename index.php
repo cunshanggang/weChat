@@ -8,7 +8,7 @@
 /**
  * wechat php test
  */
-
+ini_set('always_populate_raw_post_data',-1);
 //define your token
 define("TOKEN", "james");
 $wechatObj = new wechatCallbackapiTest();
