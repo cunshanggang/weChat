@@ -61,19 +61,19 @@ class wechatCallbackapiTest
                     $contentStr = "姚明！要命！饶命！";
                 }else{
                     preg_match("/(\d+)([+-])(\d+)/i",$keyword,$res);
-//                    switch ($res[2]) {
-//                        case '+';
-//                            $result = $res[1]+$res[3];
-//                            break;
-//                        case '-';
-//                            $result = $res[1]-$res[3];
-//                            break;
-//                    }
-                    if($res[2] == '+') {
-                        $result = $res[1]+$res[3];
-                    }else if($res[2] == '-') {
-                        $result = $res[1]-$res[3];
+                    switch ($res[2]) {
+                        case '+';
+                            $result = $res[1]+$res[3];
+                            break;
+                        case '-';
+                            $result = $res[1]-$res[3];
+                            break;
                     }
+//                    if($res[2] == '+') {
+//                        $result = $res[1]+$res[3];
+//                    }else if($res[2] == '-') {
+//                        $result = $res[1]-$res[3];
+//                    }
                     $contentStr = "运算结果是:".$result;
                 }
                 $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
