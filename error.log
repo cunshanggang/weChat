@@ -243,3 +243,17 @@
 <Content><![CDATA[姚明456]]></Content>
 <MsgId>6509319230148059449</MsgId>
 </xml>
+<xml><ToUserName><![CDATA[gh_6035e65ca645]]></ToUserName>
+<FromUserName><![CDATA[ocvlH1WfcWaJ-UWmV90-PM4ZNHCw]]></FromUserName>
+<CreateTime>1515569331</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[姚明789]]></Content>
+<MsgId>6509320711911776665</MsgId>
+</xml>
+<xml><ToUserName><![CDATA[gh_6035e65ca645]]></ToUserName>
+<FromUserName><![CDATA[ocvlH1WfcWaJ-UWmV90-PM4ZNHCw]]></FromUserName>
+<CreateTime>1515569480</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[姚明1011]]></Content>
+<MsgId>6509321351861903806</MsgId>
+</xml>
