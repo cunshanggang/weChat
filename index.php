@@ -57,6 +57,7 @@ class wechatCallbackapiTest
             if(!empty( $keyword ))
             {
                 $msgType = "text";
+                $result = '';
                 if($keyword == "姚明") {
                     $contentStr = "姚明！要命！饶命！";
                 }else{
@@ -65,13 +66,12 @@ class wechatCallbackapiTest
                     switch ($res[2]) {
                         case '+';
                             $result = $res[1]+$res[3];
-                            $contentStr = "运算结果是:".$result;
                             break;
                         case '-';
                             $result = $res[1]-$res[3];
-                            $contentStr = "运算结果是:".$result;
                             break;
                     }
+                    $contentStr = "运算结果是:".$result;
                 }
                 $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
                 echo $resultStr;
