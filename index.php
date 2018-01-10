@@ -61,13 +61,14 @@ class wechatCallbackapiTest
                     $contentStr = "姚明！要命！饶命！";
                 }else{
                     preg_match("/(\d+)(+-)(\d+)/i",$keyword,$res);
-                    $result = '';
+                    //$result = '';
                     switch ($res[2]) {
                         case '+';
                             $result = $res[1]+$res[3];
                             break;
                         case '-';
                             $result = $res[1]-$res[3];
+                            break;
                     }
                     $contentStr = "运算结果是:".$result;
                 }
