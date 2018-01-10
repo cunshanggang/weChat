@@ -229,3 +229,17 @@
 <Content><![CDATA[的]]></Content>
 <MsgId>6509308935111450083</MsgId>
 </xml>
+<xml><ToUserName><![CDATA[gh_6035e65ca645]]></ToUserName>
+<FromUserName><![CDATA[ocvlH1WfcWaJ-UWmV90-PM4ZNHCw]]></FromUserName>
+<CreateTime>1515568860</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[姚明123]]></Content>
+<MsgId>6509318688982180097</MsgId>
+</xml>
+<xml><ToUserName><![CDATA[gh_6035e65ca645]]></ToUserName>
+<FromUserName><![CDATA[ocvlH1WfcWaJ-UWmV90-PM4ZNHCw]]></FromUserName>
+<CreateTime>1515568986</CreateTime>
+<MsgType><![CDATA[text]]></MsgType>
+<Content><![CDATA[姚明456]]></Content>
+<MsgId>6509319230148059449</MsgId>
+</xml>
