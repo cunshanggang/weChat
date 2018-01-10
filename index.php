@@ -60,8 +60,7 @@ class wechatCallbackapiTest
                 if($keyword == "姚明") {
                     $contentStr = "姚明！要命！饶命！";
                 }else{
-                    preg_match("/(\d+)(+-)(\d+)/i",$keyword,$res);
-                    $result = '';
+                    preg_match("/(\d+)([+-])(\d+)/i",$keyword,$res);
 //                    switch ($res[2]) {
 //                        case '+';
 //                            $result = $res[1]+$res[3];
