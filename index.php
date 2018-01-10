@@ -34,7 +34,7 @@ class wechatCallbackapiTest
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
         //ini_set('always_populate_raw_post_data',-1);
 //        $postStr = file_get_contents("php://input");
-        file_put_contents("error.log",$postStr.PHP_EOL,FILE_APPEND);
+        //file_put_contents("error.log",$postStr.PHP_EOL,FILE_APPEND);
 
         //extract post data
         if (!empty($postStr)){
@@ -60,7 +60,16 @@ class wechatCallbackapiTest
                 if($keyword == "姚明") {
                     $contentStr = "姚明！要命！饶命！";
                 }else{
-                    $contentStr = "Welcome to Jamess Official Accounts!";
+                    preg_match("/(\d+)(+-)(\d+)/i",$keyword,$res);
+                    $result = '';
+                    switch ($res[2]) {
+                        case '+';
+                            $result = $res[1]+$res[3];
+                            break;
+                        case '-';
+                            $result = $res[1]-$res[3];
+                    }
+                    $contentStr = "运算结果是:".$result;
                 }
                 $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
                 echo $resultStr;
