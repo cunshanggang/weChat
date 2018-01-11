@@ -60,7 +60,7 @@ class wechatCallbackapiTest
             {
                 $msgType = "text";
                 if($keyword == "姚明") {
-                    $contentStr = "姚明！要命！饶命！". "[肌肉]".$this->emoji($emoji_str = "\ue14c");
+                    $contentStr = "姚明！要命！饶命！".$this->emoji($emoji_str = "/::)");
                 }else{
                     preg_match("/(\d+)([+-])(\d+)/i",$keyword,$res);
                     switch ($res[2]) {
@@ -131,6 +131,7 @@ class wechatCallbackapiTest
         }
     }
 
+    //解析表情
     public function emoji($emoji_str)
     {
         //将字符串组合成json格式
