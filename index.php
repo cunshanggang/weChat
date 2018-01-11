@@ -60,7 +60,7 @@ class wechatCallbackapiTest
             {
                 $msgType = "text";
                 if($keyword == "姚明") {
-                    $contentStr = "姚明！要命！饶命！";
+                    $contentStr = "姚明！要命！饶命！". "[肌肉]".$this->emoji($emoji_str = "\ue14c");
                 }else{
                     preg_match("/(\d+)([+-])(\d+)/i",$keyword,$res);
                     switch ($res[2]) {
@@ -87,8 +87,6 @@ class wechatCallbackapiTest
                     case "event":
                         if($event == 'subscribe') {
                             $contentStr = "Hi,欢迎关注jamess公众号，期待您的到来!";
-                        }else{
-                            $contentStr = "感谢您的关注！欢迎下次再来!";
                         }
                         break;
                 }
@@ -131,6 +129,17 @@ class wechatCallbackapiTest
         }else{
             return false;
         }
+    }
+
+    public function emoji($emoji_str)
+    {
+        //将字符串组合成json格式
+        $emoji_str = '["'.$emoji_str.'"]';
+        $emoji_arr = json_decode($emoji_str, true);
+        if (count($emoji_arr) == 1)
+            return $emoji_arr[0];
+        else
+            return null;
     }
 }
 ?>
