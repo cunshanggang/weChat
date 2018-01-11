@@ -44,6 +44,8 @@ class wechatCallbackapiTest
             $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
             $fromUsername = $postObj->FromUserName;
             $toUsername = $postObj->ToUserName;
+            $msgType = $postObj->MsgType;//消息类型：事件或者文本
+            $event = $postObj->Event;//事件类型，subscribe(订阅),unsubscribe(取消订阅)
             $keyword = trim($postObj->Content);
             $time = time();
             $textTpl = "<xml>  
@@ -79,10 +81,25 @@ class wechatCallbackapiTest
                 $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
                 echo $resultStr;
                 exit;
-            }else{
+            }else if($msgType) {
+                //关注subscribe,取消关注unsubscribe
+                switch ($msgType) {
+                    case "event":
+                        if($event == 'subscribe') {
+                            $contentStr = "Hi,欢迎关注jamess公众号，期待您的到来!";
+                        }else{
+                            $contentStr = "感谢您的关注！欢迎下次再来!";
+                        }
+                        break;
+                }
+                $resultStr = sprintf($textTpl, $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                echo $resultStr;
+                exit;
+            } else{
                 echo "Input something...";
                 exit;
             }
+
         }
         else {
             echo "";
