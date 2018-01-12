@@ -46,7 +46,7 @@ class wechatCallbackapiTest {
             $event = $postObj->Event;//事件类型，subscribe(订阅),unsubscribe(取消订阅)
             $keyword = trim($postObj->Content);
             $time = time();
-
+            //关键字的处理
             if(!empty($keyword)) {
                 switch ($keyword) {
                     case "姚明":
@@ -55,15 +55,32 @@ class wechatCallbackapiTest {
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
                         break;
+                    //回复图文消息
+                    case "新闻":
+                        //新闻一
+                        $title1 = "标题1";
+                        $desc1 = "内容1";
+                        $picUrl1 = "public/upload/img/new_img_1.jpg";
+                        $url1 = "http://news.baidu.com";
+                        //新闻二
+                        $title2 = "标题2";
+                        $desc2 = "内容2";
+                        $picUrl2 = "public/upload/img/new_img_2.jpg";
+                        $url2 = "http://news.qq.com";
+
+                        $msgType = "news";
+                        $resultStr = sprintf($this->picTextTpl(), $fromUsername, $toUsername, $time, $msgType, $title1, $desc1, $picUrl1, $url1, $title2, $desc2, $picUrl2, $url2);
+                        echo $resultStr;
+                        break;
                     default:
-                        $contentStr = "请输入关键字";
+                        $contentStr = "亲,请输入关键字哦".$this->emoji($emoji_str = "/::D)");
                         $msgType = "text";
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
                         break;
                 }
             }
-            ////关注subscribe,取消关注unsubscribe
+            //关注subscribe,取消关注unsubscribe
             if($event == 'subscribe') {
                 $contentStr = "Hi,欢迎关注jamess公众号，期待您的到来!";
                 $msgType = 'text';
@@ -78,16 +95,42 @@ class wechatCallbackapiTest {
         }
     }
 
+    //图文模板
+    public function picTextTpl() {
+        $tpl = "<xml>
+                    <ToUserName><![CDATA[%s]]></ToUserName>
+                    <FromUserName><![CDATA[%s]]></FromUserName>
+                    <CreateTime>%s</CreateTime>
+                    <MsgType><![CDATA[%s]]></MsgType>
+                    <ArticleCount>2</ArticleCount>
+                    <Articles>
+                            <item>
+                                <Title><![CDATA[%s]]></Title>
+                                 <Description><![CDATA[%s]]></Description>
+                                 <PicUrl><![CDATA[%s]]></PicUrl>
+                                 <Url><![CDATA[%s]]></Url>
+                            </item>
+                            <item>
+                                <Title><![CDATA[%s]]></Title>
+                                <Description><![CDATA[%s]]></Description>
+                                <PicUrl><![CDATA[%s]]></PicUrl>
+                                <Url><![CDATA[%s]]></Url>
+                            </item>
+                    </Articles>
+                </xml>";
+        return $tpl;
+    }
+    //文本模板
     public function textTpl() {
-        $textTpl = "<xml>  
+        $tpl = "<xml>  
                     <ToUserName><![CDATA[%s]]></ToUserName>  
                     <FromUserName><![CDATA[%s]]></FromUserName>  
                     <CreateTime>%s</CreateTime>  
                     <MsgType><![CDATA[%s]]></MsgType>  
                     <Content><![CDATA[%s]]></Content>
                     <FuncFlag>0</FuncFlag>
-                    </xml>";
-        return $textTpl;
+                </xml>";
+        return $tpl;
     }
     private function checkSignature() {
         // you must define TOKEN by yourself
