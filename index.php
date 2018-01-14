@@ -69,7 +69,7 @@ class wechatCallbackapiTest {
                         $url2 = "http://news.qq.com";
 
 //                        $msgType = "news";
-                        $resultStr = sprintf($this->picTextTpl(), $fromUsername, $toUsername, $time, $msgType, $title1, $desc1, $picUrl1, $url1, $title2, $desc2, $picUrl2, $url2);
+                        $resultStr = sprintf($this->picTextTpl(), $fromUsername, $toUsername, $time, $title1, $desc1, $picUrl1, $url1, $title2, $desc2, $picUrl2, $url2);
                         echo $resultStr;
                         break;
                     default:
