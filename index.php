@@ -73,7 +73,7 @@ class wechatCallbackapiTest {
                         echo $resultStr;
                         break;
                     default:
-                        $contentStr = "亲,请输入关键字哦".$this->emoji($emoji_str = "/::D)");
+                        $contentStr = "亲,请输入关键字哦".$this->emoji($emoji_str = "/::D");
                         $msgType = "text";
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
