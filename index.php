@@ -101,7 +101,7 @@ class wechatCallbackapiTest {
                     <ToUserName><![CDATA[%s]]></ToUserName>
                     <FromUserName><![CDATA[%s]]></FromUserName>
                     <CreateTime>%s</CreateTime>
-                    <MsgType><![CDATA[%s]]></MsgType>
+                    <MsgType><![CDATA[news]]></MsgType>
                     <ArticleCount>2</ArticleCount>
                     <Articles>
                             <item>
