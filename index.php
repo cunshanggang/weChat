@@ -68,7 +68,7 @@ class wechatCallbackapiTest {
                         $picUrl2 = "http://39.108.108.194/weChat/public/upload/img/news_img_2.jpg";
                         $url2 = "http://news.qq.com";
 
-                        $msgType = "news";
+                        $msgType = "image";
                         $resultStr = sprintf($this->picTextTpl(), $fromUsername, $toUsername, $time, $msgType, $title1, $desc1, $picUrl1, $url1, $title2, $desc2, $picUrl2, $url2);
                         echo $resultStr;
                         break;
