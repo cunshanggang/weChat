@@ -60,12 +60,12 @@ class wechatCallbackapiTest {
                         //新闻一
                         $title1 = "标题1";
                         $desc1 = "内容1";
-                        $picUrl1 = "http://localhost/weChat/public/upload/img/news1.jpg";
+                        $picUrl1 = "http://39.108.108.194/weChat/public/upload/img/news1.jpg";
                         $url1 = "http://news.baidu.com";
                         //新闻二
                         $title2 = "标题2";
                         $desc2 = "内容2";
-                        $picUrl2 = "http://loclahost/weChat/public/upload/img/news2.jpg";
+                        $picUrl2 = "http://39.108.108.194/weChat/public/upload/img/news2.jpg";
                         $url2 = "http://news.qq.com";
 
 //                        $msgType = "news";
