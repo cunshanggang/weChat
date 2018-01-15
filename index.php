@@ -33,7 +33,7 @@ class wechatCallbackapiTest {
         $postStr = $GLOBALS["HTTP_RAW_POST_DATA"];
         //ini_set('always_populate_raw_post_data',-1);
 //        $postStr = file_get_contents("php://input");
-        //file_put_contents("error.log",$postStr.PHP_EOL,FILE_APPEND);
+        file_put_contents("error.log",$postStr->Content.PHP_EOL,FILE_APPEND);
 
         //extract post data
         if (!empty($postStr)){
@@ -59,7 +59,7 @@ class wechatCallbackapiTest {
                     //回复图文消息
                     case "新闻":
 //                        $result = $GLOBALS['database']->select("news","*",["LIMIT"=>10]);
-                        file_put_contents("error.log",'xw'.$keyword.PHP_EOL,FILE_APPEND);//exit;
+//                        file_put_contents("error.log",'xw'.$keyword.PHP_EOL,FILE_APPEND);
                         /*
                         //拼装字符串
                         //头部
