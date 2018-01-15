@@ -59,7 +59,8 @@ class wechatCallbackapiTest {
                     //回复图文消息
                     case "新闻":
 //                        $result = $GLOBALS['database']->select("news","*",["LIMIT"=>10]);
-                        file_put_contents("error.log",'xw'.$keyword.PHP_EOL,FILE_APPEND);exit;
+//                        file_put_contents("error.log",'xw'.$keyword.PHP_EOL,FILE_APPEND);exit;
+                        /*
                         //拼装字符串
                         //头部
                         $contentHead = "<xml>
@@ -84,19 +85,21 @@ class wechatCallbackapiTest {
                         $contentFooter = "$contentBody</Articles></xml>";
                         //合并
                         $xml = $contentHead.$contentBody.$contentFooter;
+                        $resultStr = sprintf($xml, $fromUsername, $toUsername, $time);
+                        */
                         //新闻一
-//                        $title1 = "标题1";
-//                        $desc1 = "内容1";
-//                        $picUrl1 = "http://39.108.108.194/weChat/public/upload/img/news1.jpg";
-//                        $url1 = "http://news.baidu.com";
-//                        //新闻二
-//                        $title2 = "标题2";
-//                        $desc2 = "内容2";
-//                        $picUrl2 = "http://39.108.108.194/weChat/public/upload/img/news2.jpg";
-//                        $url2 = "http://news.qq.com";
+                        $title1 = "标题1";
+                        $desc1 = "内容1";
+                        $picUrl1 = "http://39.108.108.194/weChat/public/upload/img/news1.jpg";
+                        $url1 = "http://news.baidu.com";
+                        //新闻二
+                        $title2 = "标题2";
+                        $desc2 = "内容2";
+                        $picUrl2 = "http://39.108.108.194/weChat/public/upload/img/news2.jpg";
+                        $url2 = "http://news.qq.com";
 
 //                        $msgType = "news";
-                        $resultStr = sprintf($xml, $fromUsername, $toUsername, $time);
+                        $resultStr = sprintf($this->picTextTpl(), $fromUsername, $toUsername, $time, $title1, $desc1, $picUrl1, $url1, $title2, $desc2, $picUrl2, $url2);
                         echo $resultStr;
                         break;
                     default:
