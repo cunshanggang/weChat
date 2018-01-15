@@ -8,9 +8,9 @@
 /**
  * wechat php test
  */
-require_once 'app/database.php';
 //define your token
 define("TOKEN", "james");
+require_once 'app/database.php';
 $wechatObj = new wechatCallbackapiTest();
 //$wechatObj->valid();
 //exit;
@@ -59,7 +59,7 @@ class wechatCallbackapiTest {
                     //回复图文消息
                     case "新闻":
                         $result = $GLOBALS['database']->select("news","*",["LIMIT"=>10]);
-                        file_put_contents("error.log",$result[0]['title'].PHP_EOL,FILE_APPEND);
+                        file_put_contents("error.log",$result.PHP_EOL,FILE_APPEND);
                         //拼装字符串
                         //头部
                         $contentHead = "<xml>
