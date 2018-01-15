@@ -125,6 +125,16 @@ class wechatCallbackapiTest {
                         $resultStr = sprintf($this->musicTpl(), $fromUsername, $toUsername, $time, $title, $description, $musicUrl, $musicUrl);
                         echo $resultStr;
                         break;
+                    case "location":
+                        //经度
+                        $LOCATION_Y = $postStr->LOCATION_Y;
+                        //纬度
+                        $LOCATION_X = $postStr->LOCATION_X;
+                        $contentStr = "亲，我们已经收到您发送的地理位置了\n\r经度:{$LOCATION_Y}\n\r纬度:{$LOCATION_X}\n\r请输入您关心的地方,即可查询!";
+                        $msgType = "text";
+                        $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                        echo $resultStr;
+                        break;
                     default:
                         $contentStr = "亲,请输入关键字哦".$this->emoji($emoji_str = "/::D");
                         $msgType = "text";
