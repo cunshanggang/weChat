@@ -68,7 +68,7 @@ class wechatCallbackapiTest {
                                             <FromUserName><![CDATA[%s]]></FromUserName>
                                             <CreateTime>%s</CreateTime>
                                             <MsgType><![CDATA[news]]></MsgType>
-                                            <ArticleCount>count($result)</ArticleCount>
+                                            <ArticleCount>%s</ArticleCount>
                                             <Articles>";
                         //中部
                         $items = "<item>
@@ -86,7 +86,7 @@ class wechatCallbackapiTest {
                         //合并
                         $xml = $contentHead.$contentBody.$contentFooter;
                         file_put_contents("error.log",$xml.PHP_EOL,FILE_APPEND);
-                        $resultStr = sprintf($xml, $fromUsername, $toUsername, $time);
+                        $resultStr = sprintf($xml, $fromUsername, $toUsername, $time, count($result));
 
                         /*
                         //新闻一
