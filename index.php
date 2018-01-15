@@ -10,6 +10,7 @@
  */
 //define your token
 define("TOKEN", "james");
+
 require_once 'app/database.php';
 $wechatObj = new wechatCallbackapiTest();
 //$wechatObj->valid();
