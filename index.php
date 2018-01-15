@@ -114,13 +114,15 @@ class wechatCallbackapiTest {
                     case "1":
                         $description = "Down Jacket";
                         $musicUrl = "http://39.108.108.194/weChat/public/upload/audio/DownJacket.mp3";
-                        $resultStr = sprintf($this->musicTpl(), $fromUsername, $toUsername, $time, $description, $musicUrl, $musicUrl);
+                        $title = "James Lin";
+                        $resultStr = sprintf($this->musicTpl(), $fromUsername, $toUsername, $time, $title, $description, $musicUrl, $musicUrl);
                         echo $resultStr;
                         break;
                     case "2":
                         $description = "Your Smile";
                         $musicUrl = "http://39.108.108.194/weChat/public/upload/audio/yourSmile.mp3";
-                        $resultStr = sprintf($this->musicTpl(), $fromUsername, $toUsername, $time, $description, $musicUrl, $musicUrl);
+                        $title = "村上岗音乐集合";
+                        $resultStr = sprintf($this->musicTpl(), $fromUsername, $toUsername, $time, $title, $description, $musicUrl, $musicUrl);
                         echo $resultStr;
                         break;
                     default:
@@ -179,9 +181,9 @@ class wechatCallbackapiTest {
                     <CreateTime>%s</CreateTime>
                     <MsgType><![CDATA[music]]></MsgType>
                     <Music>
-                    <Title><![CDATA[村上岗音乐集合]]></Title>
+                    <Title><![CDATA[%s]]></Title>
                     <Description><![CDATA[%s]]></Description>
-                    <MusicUrl>< ![CDATA[%s] ]></MusicUrl>
+                    <MusicUrl><![CDATA[%s]]></MusicUrl>
                     <HQMusicUrl><![CDATA[%s]]></HQMusicUrl>
                     </Music>
                 </xml>";
