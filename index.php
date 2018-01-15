@@ -43,7 +43,7 @@ class wechatCallbackapiTest {
             $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
             $fromUsername = $postObj->FromUserName;
             $toUsername = $postObj->ToUserName;
-            $msgType = $postObj->MsgType;//消息类型：事件或者文本
+//            $msgType = $postObj->MsgType;//消息类型：事件或者文本
             $event = $postObj->Event;//事件类型，subscribe(订阅),unsubscribe(取消订阅)
             $keyword = trim($postObj->Content);
             $time = time();
@@ -153,7 +153,7 @@ class wechatCallbackapiTest {
             }
 
             //发送地理位置
-            if($msgType == 'location') {
+            if($postObj->MsgType == 'location') {
                 //经度
                 $Location_Y = $postObj->Location_Y;
                 //纬度
