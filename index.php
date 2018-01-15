@@ -105,6 +105,12 @@ class wechatCallbackapiTest {
                         */
                         echo $resultStr;
                         break;
+                    case "音乐":
+                        $contentStr = "亲，您已经进入了点歌模式了，请输入您喜欢的音乐前面的数字！\n\r1.Down Jacket\n\r2.your Smile";
+                        $msgType = "text";
+                        $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                        echo $resultStr;
+                        break;
                     default:
                         $contentStr = "亲,请输入关键字哦".$this->emoji($emoji_str = "/::D");
                         $msgType = "text";
