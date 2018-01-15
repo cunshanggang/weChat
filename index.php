@@ -59,7 +59,7 @@ class wechatCallbackapiTest {
                     //回复图文消息
                     case "新闻":
 //                        $result = $GLOBALS['database']->select("news","*",["LIMIT"=>10]);
-                        file_put_contents("error.log",$keyword.PHP_EOL,FILE_APPEND);
+                        file_put_contents("error.log",'xw'.$keyword.PHP_EOL,FILE_APPEND);
                         //拼装字符串
                         //头部
                         $contentHead = "<xml>
