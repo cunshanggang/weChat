@@ -85,7 +85,7 @@ class wechatCallbackapiTest {
                         $contentFooter = "$contentBody</Articles></xml>";
                         //合并
                         $xml = $contentHead.$contentBody.$contentFooter;
-                        file_put_contents("error.log",$xml.PHP_EOL,FILE_APPEND);
+//                        file_put_contents("error.log",$xml.PHP_EOL,FILE_APPEND);
                         $resultStr = sprintf($xml, $fromUsername, $toUsername, $time, count($result));
 
                         /*
