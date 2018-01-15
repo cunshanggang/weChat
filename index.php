@@ -127,9 +127,9 @@ class wechatCallbackapiTest {
                         break;
                     case "location":
                         //经度
-                        $Location_Y = $postStr->Location_Y;
+                        $Location_Y = $postObj->Location_Y;
                         //纬度
-                        $Location_X = $postStr->Location_X;
+                        $Location_X = $postObj->Location_X;
                         $contentStr = "亲，我们已经收到您发送的地理位置了\n\r经度:{$Location_Y}\n\r纬度:{$Location_X}\n\r请输入您关心的地方,即可查询!";
                         $msgType = "text";
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
