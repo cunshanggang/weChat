@@ -59,8 +59,8 @@ class wechatCallbackapiTest {
                     //回复图文消息
                     case "新闻":
                         $result = $GLOBALS['database']->select("news","*",["LIMIT"=>10]);
-                        file_put_contents("error.log",$result[0]['title'].PHP_EOL,FILE_APPEND);
-                        /*
+//                        file_put_contents("error.log",$result[0]['title'].PHP_EOL,FILE_APPEND);
+
                         //拼装字符串
                         //头部
                         $contentHead = "<xml>
@@ -76,7 +76,7 @@ class wechatCallbackapiTest {
                                      <Description><![CDATA[%s]]></Description>
                                      <PicUrl><![CDATA[%s]]></PicUrl>
                                      <Url><![CDATA[%s]]></Url>
-                                </item>";
+                                 </item>";
                         $contentBody = "";
                         foreach($result as $k=>$v) {
                             $contentBody.=sprintf($items,$v['title'],$v['description'],$v['picUrl'],$v['url']);
@@ -85,8 +85,10 @@ class wechatCallbackapiTest {
                         $contentFooter = "$contentBody</Articles></xml>";
                         //合并
                         $xml = $contentHead.$contentBody.$contentFooter;
+                        file_put_contents("error.log",$xml.PHP_EOL,FILE_APPEND);
                         $resultStr = sprintf($xml, $fromUsername, $toUsername, $time);
-                        */
+
+                        /*
                         //新闻一
                         $title1 = "标题1";
                         $desc1 = "内容1";
@@ -100,6 +102,7 @@ class wechatCallbackapiTest {
 
 //                        $msgType = "news";
                         $resultStr = sprintf($this->picTextTpl(), $fromUsername, $toUsername, $time, $title1, $desc1, $picUrl1, $url1, $title2, $desc2, $picUrl2, $url2);
+                        */
                         echo $resultStr;
                         break;
                     default:
