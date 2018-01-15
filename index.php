@@ -8,6 +8,7 @@
 /**
  * wechat php test
  */
+require_once 'app/database.php';
 //define your token
 define("TOKEN", "james");
 $wechatObj = new wechatCallbackapiTest();
@@ -57,19 +58,44 @@ class wechatCallbackapiTest {
                         break;
                     //回复图文消息
                     case "新闻":
+                        $result = $GLOBALS['database']->select("news","*",["LIMIT"=>10]);
+                        //拼装字符串
+                        //头部
+                        $contentHead = "<xml>
+                                            <ToUserName><![CDATA[%s]]></ToUserName>
+                                            <FromUserName><![CDATA[%s]]></FromUserName>
+                                            <CreateTime>%s</CreateTime>
+                                            <MsgType><![CDATA[news]]></MsgType>
+                                            <ArticleCount>count($result)</ArticleCount>
+                                            <Articles>";
+                        //中部
+                        $items = "<item>
+                                    <Title><![CDATA[%s]]></Title>
+                                     <Description><![CDATA[%s]]></Description>
+                                     <PicUrl><![CDATA[%s]]></PicUrl>
+                                     <Url><![CDATA[%s]]></Url>
+                                </item>";
+                        $contentBody = "";
+                        foreach($result as $k=>$v) {
+                            $contentBody.=sprintf($items,$v['title'],$v['description'],$v['picUrl'],$v['url']);
+                        }
+                        //底部
+                        $contentFooter = "$contentBody</Articles></xml>";
+                        //合并
+                        $xml = $contentHead.$contentBody.$contentFooter;
                         //新闻一
-                        $title1 = "标题1";
-                        $desc1 = "内容1";
-                        $picUrl1 = "http://39.108.108.194/weChat/public/upload/img/news1.jpg";
-                        $url1 = "http://news.baidu.com";
-                        //新闻二
-                        $title2 = "标题2";
-                        $desc2 = "内容2";
-                        $picUrl2 = "http://39.108.108.194/weChat/public/upload/img/news2.jpg";
-                        $url2 = "http://news.qq.com";
+//                        $title1 = "标题1";
+//                        $desc1 = "内容1";
+//                        $picUrl1 = "http://39.108.108.194/weChat/public/upload/img/news1.jpg";
+//                        $url1 = "http://news.baidu.com";
+//                        //新闻二
+//                        $title2 = "标题2";
+//                        $desc2 = "内容2";
+//                        $picUrl2 = "http://39.108.108.194/weChat/public/upload/img/news2.jpg";
+//                        $url2 = "http://news.qq.com";
 
 //                        $msgType = "news";
-                        $resultStr = sprintf($this->picTextTpl(), $fromUsername, $toUsername, $time, $title1, $desc1, $picUrl1, $url1, $title2, $desc2, $picUrl2, $url2);
+                        $resultStr = sprintf($xml, $fromUsername, $toUsername, $time);
                         echo $resultStr;
                         break;
                     default:
