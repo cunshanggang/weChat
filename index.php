@@ -141,7 +141,7 @@ class wechatCallbackapiTest {
                         $row =  $GLOBALS['database']->select("members","*",['wxname'=>"$fromUsername"]);
                         //拼接链接地址
                         $head = "请点击该链接可查到附近".$r[2]."的信息\n\r";
-                        $link = "http://api.map.baidu.com/place/search?query=".urldecode($r[2])."&location=".$row['latitude'].','.$row['latitude']."&radius=1000&output=html&coord_type=gcj02";
+                        $link = "http://api.map.baidu.com/place/search?query=".urlencode($r[2])."&location=".$row['latitude'].','.$row['longitude']."&radius=1000&output=html&coord_type=gcj02";
                         $contentStr = $head.$link;
                         $msgType = "text";
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
@@ -175,7 +175,7 @@ class wechatCallbackapiTest {
                     $GLOBALS['database']->insert("members",['longitude'=>"$Location_Y",'latitude'=>"$Location_X",'join_time'=>$time,'wxname'=>"$fromUsername"]);
                 }
                 //--- 数据入库 end ---
-                $contentStr = "亲，我们已经收到您发送的地理位置了\n\r经度:{$Location_Y}\n\r纬度:{$Location_X}\n\r请输入您关心的地方,即可查询!如:肯德基";
+                $contentStr = "亲，我们已经收到您发送的地理位置了\n\r经度:{$Location_Y}\n\r纬度:{$Location_X}\n\r请输入您关心的地方,即可查询!如:cxwz肯德基";
                 $msgType = "text";
                 $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                 echo $resultStr;
