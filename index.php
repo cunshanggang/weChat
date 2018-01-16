@@ -158,7 +158,16 @@ class wechatCallbackapiTest {
                 $Location_Y = $postObj->Location_Y;
                 //纬度
                 $Location_X = $postObj->Location_X;
-                $contentStr = "亲，我们已经收到您发送的地理位置了\n\r经度:{$Location_Y}\n\r纬度:{$Location_X}\n\r请输入您关心的地方,即可查询!";
+                //--- 数据入库 start ---
+                $r = $GLOBALS['database']->select("members","*",['wxname'=>$fromUsername]);
+                $time = time();
+                if($r) {
+                    $GLOBALS['database']->update("members",['longitude'=>$Location_Y,'latitude'=>$Location_X,'join_time'=>$time],['wxname'=>$fromUsername]);
+                }else{
+                    $GLOBALS['database']->insert("members",['longitude'=>$Location_Y,'latitude'=>$Location_X,'join_time'=>$time,'wxname'=>$fromUsername]);
+                }
+                //--- 数据入库 end ---
+                $contentStr = "亲，我们已经收到您发送的地理位置了\n\r经度:{$Location_Y}\n\r纬度:{$Location_X}\n\r请输入您关心的地方,即可查询!如:肯德基";
                 $msgType = "text";
                 $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                 echo $resultStr;
