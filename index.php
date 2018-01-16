@@ -160,8 +160,8 @@ class wechatCallbackapiTest {
                 $Location_X = $postObj->Location_X;
                 $fromUsername1 = "csg";
                 //--- 数据入库 start ---
-                $r = $GLOBALS['database']->debug()->select("members","*",['wxname'=>$fromUsername1]);
-                file_put_contents("error.log",$r.PHP_EOL,FILE_APPEND);
+                $r = $GLOBALS['database']->select("members","*",['wxname'=>$fromUsername1]);
+                file_put_contents("error.log",$r[0]['wxname'].PHP_EOL,FILE_APPEND);
                 $time = time();
                 if($r) {
                     $GLOBALS['database']->update("members",['longitude'=>$Location_Y,'latitude'=>$Location_X,'join_time'=>$time],['wxname'=>$fromUsername1]);
