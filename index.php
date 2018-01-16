@@ -125,16 +125,6 @@ class wechatCallbackapiTest {
                         $resultStr = sprintf($this->musicTpl(), $fromUsername, $toUsername, $time, $title, $description, $musicUrl, $musicUrl);
                         echo $resultStr;
                         break;
-//                    case "location":
-//                        //经度
-//                        $Location_Y = $postObj->Location_Y;
-//                        //纬度
-//                        $Location_X = $postObj->Location_X;
-//                        $contentStr = "亲，我们已经收到您发送的地理位置了\n\r经度:{$Location_Y}\n\r纬度:{$Location_X}\n\r请输入您关心的地方,即可查询!";
-//                        $msgType = "text";
-//                        $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
-//                        echo $resultStr;
-//                        break;
                     default:
                         $contentStr = "亲,请输入关键字哦".$this->emoji($emoji_str = "/::D");
                         $msgType = "text";
@@ -142,6 +132,14 @@ class wechatCallbackapiTest {
                         echo $resultStr;
                         break;
                 }
+            //需要正则匹配的关键字 start -----
+                preg_match("/^(cxwz)([\x{4e00}-\x{9fa5}]+)/ui",$keyword,$r);
+                //字符：cxwz肯德基 返回结果：$r[0]=cxwz肯德基,$r[1]=cxwz,$r[2]=肯德基
+                switch($r[1]) {
+                    case 'cxwz':
+                        break;
+                }
+            //需要正则匹配的关键字 end -----
             }
             //关注subscribe,取消关注unsubscribe
             if($event == 'subscribe') {
