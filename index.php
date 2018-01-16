@@ -137,6 +137,15 @@ class wechatCallbackapiTest {
                 //字符：cxwz肯德基 返回结果：$r[0]=cxwz肯德基,$r[1]=cxwz,$r[2]=肯德基
                 switch($r[1]) {
                     case 'cxwz':
+                        //查询用户的地址
+                        $row =  $GLOBALS['database']->select("members","*",['wxname'=>"$fromUsername"]);
+                        //拼接链接地址
+                        $head = "请点击该链接可查到附近".$r[2]."的信息\n\r";
+                        $link = "http://api.map.baidu.com/place/search?query=".urldecode($r[2])."&location=".$row['latitude'].','.$row['latitude']."&radius=1000&output=html&coord_type=gcj02";
+                        $contentStr = $head.$link;
+                        $msgType = "text";
+                        $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                        echo $resultStr;
                         break;
                 }
             //需要正则匹配的关键字 end -----
