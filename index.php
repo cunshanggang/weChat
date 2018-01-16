@@ -161,7 +161,7 @@ class wechatCallbackapiTest {
 //                $f = $postObj->FromUserName;
                 //--- 数据入库 start ---
                 $r = $GLOBALS['database']->select("members","*",['wxname'=>$fromUsername]);
-                file_put_contents("error.log",$fromUsername.PHP_EOL,FILE_APPEND);
+//                file_put_contents("error.log",$fromUsername.PHP_EOL,FILE_APPEND);
                 $time = time();
                 if($r) {
                     $GLOBALS['database']->update("members",['longitude'=>$Location_Y,'latitude'=>$Location_X,'join_time'=>$time],['wxname'=>$fromUsername]);
