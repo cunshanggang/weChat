@@ -155,15 +155,15 @@ class wechatCallbackapiTest {
             //发送地理位置
             if($msgType == 'location') {
                 //经度
-//                $Location_Y = $postObj->Location_Y;
+                $Location_Y = $postObj->Location_Y;
                 //纬度
-//                $Location_X = $postObj->Location_X;
+                $Location_X = $postObj->Location_X;
 //                $f = $postObj->FromUserName;
                 //--- 数据入库 start ---
                 $r = $GLOBALS['database']->select("members","*",['wxname'=>$fromUsername]);
 //                file_put_contents("error.log",$fromUsername.PHP_EOL,FILE_APPEND);
-                $Location_Y = 113.22222;
-                $Location_X = 23.222222;
+//                $Location_Y = 113.22222;
+//                $Location_X = 23.222222;
                 $time = time();
                 if($r) {
                     $GLOBALS['database']->update("members",['longitude'=>$Location_Y,'latitude'=>$Location_X,'join_time'=>$time],['wxname'=>$fromUsername]);
