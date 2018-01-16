@@ -166,9 +166,9 @@ class wechatCallbackapiTest {
 //                $Location_X = 23.222222;
                 $time = time();
                 if($r) {
-                    $GLOBALS['database']->update("members",['longitude'=>$Location_Y,'latitude'=>$Location_X,'join_time'=>$time],['wxname'=>$fromUsername]);
+                    $GLOBALS['database']->update("members",['longitude'=>"$Location_Y",'latitude'=>"$Location_X",'join_time'=>$time],['wxname'=>$fromUsername]);
                 }else{
-                    $GLOBALS['database']->insert("members",['longitude'=>$Location_Y,'latitude'=>$Location_X,'join_time'=>$time,'wxname'=>$fromUsername]);
+                    $GLOBALS['database']->insert("members",['longitude'=>"$Location_Y",'latitude'=>"$Location_X",'join_time'=>$time,'wxname'=>$fromUsername]);
                 }
                 //--- 数据入库 end ---
                 $contentStr = "亲，我们已经收到您发送的地理位置了\n\r经度:{$Location_Y}\n\r纬度:{$Location_X}\n\r请输入您关心的地方,即可查询!如:肯德基";
