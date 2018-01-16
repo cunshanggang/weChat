@@ -158,13 +158,14 @@ class wechatCallbackapiTest {
                 $Location_Y = $postObj->Location_Y;
                 //纬度
                 $Location_X = $postObj->Location_X;
+                $fromUsername1 = "csg";
                 //--- 数据入库 start ---
-                $r = $GLOBALS['database']->select("members","*",['wxname'=>$fromUsername]);
+                $r = $GLOBALS['database']->select("members","*",['wxname'=>$fromUsername1]);
                 $time = time();
                 if($r) {
-                    $GLOBALS['database']->update("members",['longitude'=>$Location_Y,'latitude'=>$Location_X,'join_time'=>$time],['wxname'=>$fromUsername]);
+                    $GLOBALS['database']->update("members",['longitude'=>$Location_Y,'latitude'=>$Location_X,'join_time'=>$time],['wxname'=>$fromUsername1]);
                 }else{
-                    $GLOBALS['database']->insert("members",['longitude'=>$Location_Y,'latitude'=>$Location_X,'join_time'=>$time,'wxname'=>$fromUsername]);
+                    $GLOBALS['database']->insert("members",['longitude'=>$Location_Y,'latitude'=>$Location_X,'join_time'=>$time,'wxname'=>$fromUsername1]);
                 }
                 //--- 数据入库 end ---
                 $contentStr = "亲，我们已经收到您发送的地理位置了\n\r经度:{$Location_Y}\n\r纬度:{$Location_X}\n\r请输入您关心的地方,即可查询!如:肯德基";
@@ -173,6 +174,7 @@ class wechatCallbackapiTest {
                 echo $resultStr;
                 exit;
             }
+
 
         } else {
             echo "";
