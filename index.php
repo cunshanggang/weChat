@@ -141,7 +141,7 @@ class wechatCallbackapiTest {
                         $row =  $GLOBALS['database']->select("members","*",['wxname'=>"$fromUsername"]);
                         //拼接链接地址
                         $head = "请点击该链接可查到附近".$r[2]."的信息\n\r";
-                        $link = "http://api.map.baidu.com/place/search?query=".urlencode($r[2])."&location=".$row['latitude'].','.$row['longitude']."&radius=1000&output=html&coord_type=gcj02";
+                        $link = "http://api.map.baidu.com/place/search?query=".urlencode($r[2])."&location=".$row[0]['latitude'].','.$row[0]['longitude']."&radius=1000&output=html&coord_type=gcj02";
                         $contentStr = $head.$link;
                         $msgType = "text";
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
