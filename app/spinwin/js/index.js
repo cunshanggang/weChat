@@ -91,7 +91,7 @@ $(document).ready(function(){
 		//奖品数量等于10,指针落在对应奖品区域的中心角度[252, 216, 180, 144, 108, 72, 36, 360, 324, 288]
 
 		rotateFn(item, turnplate.restaraunts[item-1]);
-		 switch (item) {
+		 /*switch (item) {
 			case 1:
 				rotateFn(252, turnplate.restaraunts[0]);
 				break;
@@ -122,7 +122,7 @@ $(document).ready(function(){
 			case 10:
 				rotateFn(288, turnplate.restaraunts[9]);
 				break;
-		}
+		}*/
 		console.log(item);
 	})
 		
