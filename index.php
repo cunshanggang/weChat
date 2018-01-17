@@ -154,10 +154,10 @@ class wechatCallbackapiTest {
                         echo $resultStr;
                         break;
                     case 'cxtq':
-                        $r = $this->cURL($r[2]);
+                        $res = $this->cURL($r[2]);
                         echo "昨天:\n";
-                        $contentStr = $r['data']['yesterday']['date']."\n".'日出:'.$r['data']['yesterday']['sunrise']."\n".'最高温:'.$r['data']['yesterday']['high']."\n".'最低温:'.$r['data']['yesterday']['low']."\n".'日落:'.$r['data']['yesterday']['sunset']."\n".'空气质量:'.$r['data']['yesterday']['aqi']."\n".'风向:'.$r['data']['yesterday']['fx']."\n".'风级:'.$r['data']['yesterday']['fl']."\n".'类型:'.$r['data']['yesterday']['type']."\n".'温馨提示:'.$r['data']['yesterday']['notice']."\n\r";
-                        foreach($r['data']['forecast'] as $k=>$v) {
+                        $contentStr = $res['data']['yesterday']['date']."\n".'日出:'.$res['data']['yesterday']['sunrise']."\n".'最高温:'.$res['data']['yesterday']['high']."\n".'最低温:'.$res['data']['yesterday']['low']."\n".'日落:'.$res['data']['yesterday']['sunset']."\n".'空气质量:'.$res['data']['yesterday']['aqi']."\n".'风向:'.$res['data']['yesterday']['fx']."\n".'风级:'.$res['data']['yesterday']['fl']."\n".'类型:'.$res['data']['yesterday']['type']."\n".'温馨提示:'.$res['data']['yesterday']['notice']."\n\r";
+                        foreach($res['data']['forecast'] as $k=>$v) {
                             $contentStr .= $v['date']."\n".'日出:'.$v['sunrise']."\n".'最高温:'.$v['high']."\n".'最低温:'.$v['low']."\n".'日落:'.$v['sunset']."\n".'空气质量:'.$v['aqi']."\n".'风向:'.$v['fx']."\n".'风级:'.$v['fl']."\n".'类型:'.$v['type']."\n".'温馨提示:'.$v['notice']."\n\r";
                         }
                         $msgType = "text";
