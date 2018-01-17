@@ -126,7 +126,7 @@ class wechatCallbackapiTest {
                         echo $resultStr;
                         break;
                     case "幸运大转盘":
-                        $contentStr = "请点击一下链接进行抽奖:\r\n";
+                        $contentStr = "请点击一下链接进行抽奖:\r\nhttp://39.108.108.194/weChat/app/spinwin/index.html";
                         $msgType = "text";
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
