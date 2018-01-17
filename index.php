@@ -125,6 +125,12 @@ class wechatCallbackapiTest {
                         $resultStr = sprintf($this->musicTpl(), $fromUsername, $toUsername, $time, $title, $description, $musicUrl, $musicUrl);
                         echo $resultStr;
                         break;
+                    case "幸运大转盘":
+                        $contentStr = "请点击一下链接进行抽奖:\r\n";
+                        $msgType = "text";
+                        $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                        echo $resultStr;
+                        break;
 //                    default:
 //                        $contentStr = "亲,请输入关键字哦".$this->emoji($emoji_str = "/::D");
 //                        $msgType = "text";
