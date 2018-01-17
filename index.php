@@ -304,7 +304,7 @@ class wechatCallbackapiTest {
         curl_setopt($chjk,CURLOPT_HEADER,0);
         $result = curl_exec($chjk);
 
-        return json_decode($result);
+        return json_decode($result,true);
     }
 }
 ?>
