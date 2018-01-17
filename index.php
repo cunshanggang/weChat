@@ -139,7 +139,8 @@ class wechatCallbackapiTest {
 //                        break;
                 }
             //需要正则匹配的关键字 start -----
-                preg_match("/^(cxwz)([\x{4e00}-\x{9fa5}]+)/ui",$keyword,$r);
+//                preg_match("/^(cxwz)([\x{4e00}-\x{9fa5}]+)/ui",$keyword,$r);
+                preg_match("/^([a-z]{4})([\x{4e00}-\x{9fa5}]+)/ui",$keyword,$r);
                 //字符：cxwz肯德基 返回结果：$r[0]=cxwz肯德基,$r[1]=cxwz,$r[2]=肯德基
                 switch($r[1]) {
                     case 'cxwz':
@@ -154,7 +155,6 @@ class wechatCallbackapiTest {
                         echo $resultStr;
                         break;
                     case 'cxtq':
-                        file_put_contents("error.log",$r[2].PHP_EOL,FILE_APPEND);
                         $res = $this->cURL($r[2]);
                         $contentStr = "昨天:\n".$res['data']['yesterday']['date']."\n".'日出:'.$res['data']['yesterday']['sunrise']."\n".'最高温:'.$res['data']['yesterday']['high']."\n".'最低温:'.$res['data']['yesterday']['low']."\n".'日落:'.$res['data']['yesterday']['sunset']."\n".'空气质量:'.$res['data']['yesterday']['aqi']."\n".'风向:'.$res['data']['yesterday']['fx']."\n".'风级:'.$res['data']['yesterday']['fl']."\n".'类型:'.$res['data']['yesterday']['type']."\n".'温馨提示:'.$res['data']['yesterday']['notice']."\n\r";
                         foreach($res['data']['forecast'] as $k=>$v) {
