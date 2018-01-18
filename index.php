@@ -202,7 +202,7 @@ class wechatCallbackapiTest {
                         //合并
                         $xml = $contentHead.$contentBody.$contentFooter;
 //                        file_put_contents("error.log",$xml.PHP_EOL,FILE_APPEND);
-                        $resultStr = sprintf($xml, $fromUsername, $toUsername, $time, count($result));
+                        $resultStr = sprintf($xml, $fromUsername, $toUsername, $time, count($result['results'][0]['weather_data']));
                         echo $resultStr;
                         break;
                 }
