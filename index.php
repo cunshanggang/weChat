@@ -175,7 +175,6 @@ class wechatCallbackapiTest {
                     case 'bdtq':
                         $url = "http://api.map.baidu.com/telematics/v3/weather?location=$r[2]&output=json&ak=A97e3bda2ac739aa574f16ec94055d75";
                         $result = $this->cURL($url);
-                        file_put_contents("error.log",$result.PHP_EOL,FILE_APPEND);
                         //拼装字符串
                         //头部
                         $contentHead = "<xml>
@@ -193,8 +192,7 @@ class wechatCallbackapiTest {
                                      <Url><![CDATA[%s]]></Url>
                                  </item>";
                         $t = $r[2]."天气实况与预报";
-//                        $contentBody = sprintf($items,$t,"11","11","11");
-                        $contentBody ="";
+                        $contentBody = sprintf($items,$t,"","","");
                         foreach($result['results'][0]['weather_data'] as $k=>$v) {
 //                            $title = $v['date']. "\n".$v['weather']." ".$v['wind']." ".$v['temperature'];
                             $contentBody.=sprintf($items,$v['date']. "\n".$v['weather']." ".$v['wind']." ".$v['temperature'],"11",$v['dayPictureUrl'],"11");
@@ -204,7 +202,7 @@ class wechatCallbackapiTest {
                         //合并
                         $xml = $contentHead.$contentBody.$contentFooter;
                         $c = (count($result['results'][0]['weather_data'])+1);
-                        $resultStr = sprintf($xml, $fromUsername, $toUsername, $time, count($result['results'][0]['weather_data']));
+                        $resultStr = sprintf($xml, $fromUsername, $toUsername, $time, $c);
                         echo $resultStr;
                         break;
                 }
