@@ -194,8 +194,8 @@ class wechatCallbackapiTest {
                         $t = $r[2]."天气实况与预报";
                         $contentBody = sprintf($items,$t,"","","");
                         foreach($result['results'][0]['weather_data'] as $k=>$v) {
-//                            $title = $v['date']. "\n".$v['weather']." ".$v['wind']." ".$v['temperature'];
-                            $contentBody.=sprintf($items,$v['date']. "\n".$v['weather']." ".$v['wind']." ".$v['temperature'],"11",$v['dayPictureUrl'],"11");
+                            $title = $v['date']. "\n".$v['weather']." ".$v['wind']." ".$v['temperature'];
+                            $contentBody.=sprintf($items,$title,"",$v['dayPictureUrl'],"");
                         }
                         //底部
                         $contentFooter = "$contentBody</Articles></xml>";
