@@ -140,7 +140,7 @@ class wechatCallbackapiTest {
                 }
             //需要正则匹配的关键字 start -----
 //                preg_match("/^(cxwz)([\x{4e00}-\x{9fa5}]+)/ui",$keyword,$r);
-                preg_match("/^([a-z]{4})([\x{4e00}-\x{9fa5}]+)/ui",$keyword,$r);
+                preg_match("/^([a-z]{4})([\x{4e00}-\x{9fa5}]+.*)/ui",$keyword,$r);
                 //字符：cxwz肯德基 返回结果：$r[0]=cxwz肯德基,$r[1]=cxwz,$r[2]=肯德基
                 switch($r[1]) {
                     case 'cxwz':
