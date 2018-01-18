@@ -175,6 +175,7 @@ class wechatCallbackapiTest {
                     case 'bdtq':
                         $url = "http://api.map.baidu.com/telematics/v3/weather?location=$r[2]&output=json&ak=A97e3bda2ac739aa574f16ec94055d75";
                         $result = $this->cURL($url);
+                        file_put_contents("error.log",$result.PHP_EOL,FILE_APPEND);
                         //拼装字符串
                         //头部
                         $contentHead = "<xml>
@@ -202,7 +203,6 @@ class wechatCallbackapiTest {
                         $contentFooter = "$contentBody</Articles></xml>";
                         //合并
                         $xml = $contentHead.$contentBody.$contentFooter;
-                        file_put_contents("error.log",$xml.PHP_EOL,FILE_APPEND);
                         $c = (count($result['results'][0]['weather_data'])+1);
                         $resultStr = sprintf($xml, $fromUsername, $toUsername, $time, count($result['results'][0]['weather_data']));
                         echo $resultStr;
