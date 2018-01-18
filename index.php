@@ -172,6 +172,39 @@ class wechatCallbackapiTest {
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
                         break;
+                    case 'bdtq':
+                        $url = "http://api.map.baidu.com/telematics/v3/weather?location=$r[2]&output=json&ak=A97e3bda2ac739aa574f16ec94055d75";
+                        $result = $this->cURL($url);
+                        //拼装字符串
+                        //头部
+                        $contentHead = "<xml>
+                                            <ToUserName><![CDATA[%s]]></ToUserName>
+                                            <FromUserName><![CDATA[%s]]></FromUserName>
+                                            <CreateTime>%s</CreateTime>
+                                            <MsgType><![CDATA[news]]></MsgType>
+                                            <ArticleCount>%s</ArticleCount>
+                                            <Articles>";
+                        //中部
+                        $items = "<item>
+                                     <Title><![CDATA[%s]]></Title>
+                                     <Description><![CDATA[%s]]></Description>
+                                     <PicUrl><![CDATA[%s]]></PicUrl>
+                                     <Url><![CDATA[%s]]></Url>
+                                 </item>";
+                        $t = $r[2]."天气实况与预报";
+                        $contentBody = sprintf($items,$t,"","","");
+                        foreach($result['results'][0]['weather_data'] as $k=>$v) {
+                            $title = $v['date']. "\n".$v['weather']." ".$v['wind']." ".$v['temperature'];
+                            $contentBody.=sprintf($items,$title,"",$v['dayPictureUrl'],"");
+                        }
+                        //底部
+                        $contentFooter = "$contentBody</Articles></xml>";
+                        //合并
+                        $xml = $contentHead.$contentBody.$contentFooter;
+//                        file_put_contents("error.log",$xml.PHP_EOL,FILE_APPEND);
+                        $resultStr = sprintf($xml, $fromUsername, $toUsername, $time, count($result));
+                        echo $resultStr;
+                        break;
                 }
             //需要正则匹配的关键字 end -----
             }
