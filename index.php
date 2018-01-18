@@ -192,7 +192,8 @@ class wechatCallbackapiTest {
                                      <Url><![CDATA[%s]]></Url>
                                  </item>";
                         $t = $r[2]."天气实况与预报";
-                        $contentBody = sprintf($items,$t,"11","11","11");
+//                        $contentBody = sprintf($items,$t,"11","11","11");
+                        $contentBody ="";
                         foreach($result['results'][0]['weather_data'] as $k=>$v) {
                             $title = $v['date']. "\n".$v['weather']." ".$v['wind']." ".$v['temperature'];
                             $contentBody.=sprintf($items,$title,"11",$v['dayPictureUrl'],"11");
@@ -203,7 +204,7 @@ class wechatCallbackapiTest {
                         $xml = $contentHead.$contentBody.$contentFooter;
 //                        file_put_contents("error.log",$xml.PHP_EOL,FILE_APPEND);
                         $c = (count($result['results'][0]['weather_data'])+1);
-                        $resultStr = sprintf($xml, $fromUsername, $toUsername, $time, $c);
+                        $resultStr = sprintf($xml, $fromUsername, $toUsername, $time, 5);
                         echo $resultStr;
                         break;
                 }
