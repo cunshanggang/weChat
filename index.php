@@ -133,8 +133,8 @@ class wechatCallbackapiTest {
                         break;
                     case "脑筋急转弯":
                         $id = rand(1,225);
-                        $row = $GLOBALS['database']->select("tp_brain_teaser","*",["id"=>$id]);
-                        $contentStr = "脑筋急转弯：\n\r问题：".$row['question'].'\n\r'."答案：".$row['answer'];
+                        $row = $GLOBALS['database']->select("brain_teaser","*",["id"=>$id]);
+                        $contentStr = "脑筋急转弯：\n\r"."问题：".$row['question'].'\n\r'."答案：".$row['answer'];
                         $msgType = "text";
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
