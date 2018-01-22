@@ -141,6 +141,14 @@ class wechatCallbackapiTest {
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
                         break;
+                    case "冷笑话":
+                        $id = rand(1,80);
+                        $row = $GLOBALS['database']->select("dry_humor","*",["id"=>"$id"]);
+                        $contentStr = "冷笑话：\n\r".$row[0]['content'];
+                        $msgType = "text";
+                        $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                        echo $resultStr;
+                        break;
 //                    default:
 //                        $contentStr = "亲,请输入关键字哦".$this->emoji($emoji_str = "/::D");
 //                        $msgType = "text";
