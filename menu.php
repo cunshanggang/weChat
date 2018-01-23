@@ -75,7 +75,7 @@ $jsonmenu = '{
 
 $url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$access_token;
 $result = https_request($url, $jsonmenu);
-var_dump($result);
+//var_dump($result);
 
 function https_request($url,$data = null){
     $curl = curl_init();
