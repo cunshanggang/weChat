@@ -8,6 +8,9 @@
 require_once 'config/accessToken.php';
 $appid = $GLOBALS['appid'];
 $appsecret = $GLOBALS['appsecret'];
+echo $appid;
+echo "<br>";
+echo $appsecret;
 $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$appid&secret=$appsecret";
 
 $output = https_request($url);
