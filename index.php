@@ -235,34 +235,64 @@ class wechatCallbackapiTest {
                         //第n个获取信息的人
                         $chk_res = $GLOBALS['database']->select("undercover","*",["status"=>1]);
                         $join_time = date("Y-m-d H:i:s");
-
+                        $id = $chk_res[0]['id'];
                         if($chk_res) {
-                            $last_order_id = $GLOBALS['database']->select("player","*",["u_id"=>$chk_res[0]['id']],["order"=>"DESC","limit"=>"1"]);
+                            $uid = $chk_res[0]['id'];
+                            //判断是否同一个人在同一个游戏中获取两次信息
+                            $chk_name = $GLOBALS['database']->select("player","*",array("AND"=>array("wxname"=>"$fromUsername","u_id"=>"$uid")));
+                            $last_order_id = $GLOBALS['database']->select("player","*",array("u_id"=>"$uid","ORDER"=>["id"=>"DESC"],"LIMIT"=>"1"));
+                            if(!empty($chk_name)) {
+                                if($last_order_id[0]['order'] == ($chk_res[0]['luck_number']-1) && ($last_order_id[0]['order'] != ($match[2]-1))) {
+                                    //echo "你是卧底";
+                                    $order = $chk_res[0]['luck_number'];
+                                    $role_name = $chk_res[0]['spy'];
+                                    $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>"0","role_name"=>"$role_name","u_id"=>"$uid","time"=>"$join_time","order"=>"$order"]);
 
-                            if($last_order_id[0]['order'] == ($chk_res[0]['luck_number']-1)) {
-                                //echo "你是卧底";
-                                $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>"0","role_name"=>"$chk_res[0]['spy']","u_id"=>"$chk_res[0]['id']","time"=>"$join_time","order"=>"$chk_res[0]['luck_number']"]);
-                                $contentStr = "http://39.108.108.194/weChat/app/undercover/show.php?keyword=".urlencode($chk_res[0]['spy'])."&time=".urlencode($join_time);
-                                $msgType = 'text';
-                                $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
-                                echo $resultStr;
-                            }else if($last_order_id[0]['order'] == ($match[2]-1)){
-                                $order = $last_order_id[0]['order']+1;
-                                $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>"1","role_name"=>"$chk_res[0]['folk']","u_id"=>"$chk_res[0]['id']","time"=>"$join_time","order"=>"$order"]);
-                                //最后一个取完号码，更新undercover表的状态
-                                $GLOBALS['database']->update("undercove",["status"=>"0","luck_number"=>"0"],["id"=>"$chk_res[0]['id']"]);
-                                $contentStr = "http://39.108.108.194/weChat/app/undercover/show.php?keyword=".urlencode($chk_res[0]['spy'])."&time=".urlencode($join_time);
-                                $msgType = 'text';
-                                $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
-                                echo $resultStr;
+                                    $contentStr = "http://39.108.108.194/weChat/app/undercover/show.php?keyword=".urlencode($chk_res[0]['spy'])."&type=0"."&order=$order"."&time=".urlencode($join_time);
+                                    $msgType = 'text';
+                                    $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                                    echo $resultStr;
+                                }else if(($last_order_id[0]['order'] == ($match[2]-1)) && ($last_order_id[0]['order'] != ($chk_res[0]['luck_number']-1))){
+                                    //最后一个取词语，但不是卧底
+                                    $order = $last_order_id[0]['order']+1;
+                                    $role_name = $chk_res[0]['folk'];
+                                    $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>"1","role_name"=>"$role_name","u_id"=>"$uid","time"=>"$join_time","order"=>"$order"]);
+                                    //最后一个取完号码，更新undercover表的状态
+                                    $GLOBALS['database']->update("undercover",["status"=>"0","luck_number"=>"0"],["id"=>"$id"]);
+
+                                    $contentStr = "http://39.108.108.194/weChat/app/undercover/show.php?keyword=".urlencode($chk_res[0]['folk'])."&type=0"."&order=$order"."&time=".urlencode($join_time);
+                                    $msgType = 'text';
+                                    $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                                    echo $resultStr;
+                                }else if($last_order_id[0]['order'] == ($chk_res[0]['luck_number']-1) && ($last_order_id[0]['order'] == ($match[2]-1))){
+                                    //既是卧底，又是最后一个人
+                                    $order = $chk_res[0]['luck_number'];
+                                    $role_name = $chk_res[0]['spy'];
+                                    $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>"0","role_name"=>"$role_name","u_id"=>"$uid","time"=>"$join_time","order"=>"$order"]);
+                                    $GLOBALS['database']->update("undercover",["status"=>"0","luck_number"=>"0"],["id"=>"$id"]);
+
+                                    $contentStr = "http://39.108.108.194/weChat/app/undercover/show.php?keyword=".urlencode($chk_res[0]['spy'])."&type=0"."&order=$order"."&time=".urlencode($join_time);
+                                    $msgType = 'text';
+                                    $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                                    echo $resultStr;
+                                }else{
+                                    //平民，又不是最后一个人
+                                    $order = $last_order_id[0]['order']+1;
+                                    $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>"1","role_name"=>"$chk_res[0]['folk']","u_id"=>"$chk_res[0]['id']","time"=>"$join_time","order"=>"$order"]);
+                                    $contentStr = "http://39.108.108.194/weChat/app/undercover/show.php?keyword=".urlencode($chk_res[0]['spy'])."&type=1"."&order=$order"."&time=".urlencode($join_time);
+                                    $msgType = 'text';
+                                    $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                                    echo $resultStr;
+                                }
                             }else{
-                                $order = $last_order_id[0]['order']+1;
-                                $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>"1","role_name"=>"$chk_res[0]['folk']","u_id"=>"$chk_res[0]['id']","time"=>"$join_time","order"=>"$order"]);
-                                $contentStr = "http://39.108.108.194/weChat/app/undercover/show.php?keyword=".urlencode($chk_res[0]['spy'])."&time=".urlencode($join_time);
+                                //非法获取
+                                $error = "非法获取";
+                                $contentStr = "http://39.108.108.194/weChat/app/undercover/show.php?keyword=".urlencode($error)."&time=".urlencode($join_time);
                                 $msgType = 'text';
                                 $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                                 echo $resultStr;
                             }
+
                         }else{
                             //第一次创建的人
                             //获取词组表undercover的总数
