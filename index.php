@@ -159,6 +159,7 @@ class wechatCallbackapiTest {
                 preg_match("/^([a-z]{4})([\x{4e00}-\x{9fa5}]+.*)/ui",$keyword,$r);
                 //字符：cxwz肯德基 返回结果：$r[0]=cxwz肯德基,$r[1]=cxwz,$r[2]=肯德基
                 switch($r[1]) {
+                    //查询位置
                     case 'cxwz':
                         //查询用户的地址
                         $row =  $GLOBALS['database']->select("members","*",['wxname'=>"$fromUsername"]);
@@ -170,6 +171,7 @@ class wechatCallbackapiTest {
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
                         break;
+                    //查询天气
                     case 'cxtq':
                         $url = "http://www.sojson.com/open/api/weather/json.shtml?city=$r[2]";
                         $res = $this->cURL($url);
@@ -181,6 +183,7 @@ class wechatCallbackapiTest {
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
                         break;
+                    //百度翻译
                     case 'bdfy':
                         $res = $this->translate($r[2]);
                         $contentStr = $r[2]."\n".$res['trans_result']['0']['dst'];
@@ -188,6 +191,7 @@ class wechatCallbackapiTest {
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
                         break;
+                    //百度天气
                     case 'bdtq':
                         $url = "http://api.map.baidu.com/telematics/v3/weather?location=$r[2]&output=json&ak=A97e3bda2ac739aa574f16ec94055d75";
                         $result = $this->cURL($url);
@@ -223,6 +227,19 @@ class wechatCallbackapiTest {
                         break;
                 }
             //需要正则匹配的关键字 end -----
+            //谁是卧底游戏 start
+                //匹配谁是卧底
+                preg_match("/^([\x{4e00}-\x{9fa5}]+)([\d]+)/u",$keyword,$match);
+                switch ($match[1]) {
+                    case '谁是卧底':
+                        $contentStr = "欢迎来到谁是卧底游戏！";
+                        $msgType = 'text';
+                        $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                        echo $resultStr;
+
+                        break;
+                }
+            //谁是卧底游戏 end
             }
             //关注subscribe,取消关注unsubscribe
             if($event == 'subscribe') {
