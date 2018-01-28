@@ -273,28 +273,30 @@ class wechatCallbackapiTest {
                             $spy = $GLOBALS['database']->select("undercover","*",["id"=>"$rand"]);
                             //卧底号码
                             $luck_number = rand(1,$match[2]);
+                            //角色名称
+                            $role_name_spy = $spy[0]['spy'];//卧底
+                            $role_name_folk = $spy[0]['folk'];
+                            $u_id = $spy[0]['id'];
                             //更新选中的状态
                             $GLOBALS['database']->update("undercover",["status"=>1,"luck_number"=>"$luck_number"],["id"=>"$rand"]);
                             //插入数据到玩家player表,判断他是否为卧底,1:平民，0:卧底
                             if($luck_number == 1) {
-                                $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>0,"role_name"=>"$spy[0]['spy']","u_id"=>"$spy[0]['id']","time"=>"$join_time","order"=>1]);
+                                $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>0,"role_name"=>"$role_name_spy","u_id"=>"$u_id","time"=>"$join_time","order"=>1]);
                                 $contentStr = "http://39.108.108.194/weChat/app/undercover/show.php?keyword=".urlencode($spy[0]['spy'])."&time=".urlencode($join_time);
                                 $msgType = 'text';
                                 $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                                 echo $resultStr;
                             }else{
-                                $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>0,"role_name"=>"$spy[0]['folk']","u_id"=>"$spy[0]['id']","time"=>"$join_time","order"=>1]);
+                                $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>1,"role_name"=>"$role_name_folk","u_id"=>"$u_id","time"=>"$join_time","order"=>1]);
                                 $contentStr = "http://39.108.108.194/weChat/app/undercover/show.php?keyword=".urlencode($spy[0]['folk'])."&time=".urlencode($join_time);
                                 $msgType = 'text';
                                 $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                                 echo $resultStr;
                             }
                         }
-
-                        $msgType = 'text';
-                        $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
-                        echo $resultStr;
-
+//                        $msgType = 'text';
+//                        $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
+//                        echo $resultStr;
                         break;
                 }
             //谁是卧底游戏 end
