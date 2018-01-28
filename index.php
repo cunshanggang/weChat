@@ -232,7 +232,7 @@ class wechatCallbackapiTest {
                 preg_match("/^([\x{4e00}-\x{9fa5}]+)([\d]+)/u",$keyword,$match);
                 switch ($match[1]) {
                     case '谁是卧底':
-                        $contentStr = "欢迎来到谁是卧底游戏！";
+                        $contentStr = "欢迎来到谁是卧底游戏！共$match[2]人玩";
                         $msgType = 'text';
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
