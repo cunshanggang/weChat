@@ -287,7 +287,7 @@ class wechatCallbackapiTest {
                                 }
                             }else{
                                 //非法获取
-                                $contentStr = "http://39.108.108.194/weChat/app/undercover/index.html?type=2&join_time=".urlencode($join_time);
+                                $contentStr = "http://39.108.108.194/weChat/app/undercover/index.html?type=2&join_time=".$join_time;
                                 $msgType = 'text';
                                 $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                                 echo $resultStr;
