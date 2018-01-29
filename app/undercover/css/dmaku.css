@@ -1,6 +1,6 @@
 body {margin:0 auto;overflow:hidden;}
 
-/*=============第一页=============*/	
+/*=============第一页=============*/
 .header{
 	margin:0 auto;
 	width:100%;
@@ -20,20 +20,20 @@ body {margin:0 auto;overflow:hidden;}
 	height:640px;
 	position:absolute;
 	z-index:10;
-		filter:alpha(opacity=40);  
-      	-moz-opacity:0.4;  
-      	-khtml-opacity: 0.4;  
+		filter:alpha(opacity=40);
+      	-moz-opacity:0.4;
+      	-khtml-opacity: 0.4;
       	opacity: 0.4;
 	}
 
-.audio{ 
+.audio{
 /*设置音乐显示位置*/
 	width:45px;
 	position:fixed;top:65px;left:94%;
 	z-index:100;
-	filter:alpha(opacity=30);  
-      -moz-opacity:0.3;  
-      -khtml-opacity: 0.3;  
+	filter:alpha(opacity=30);
+      -moz-opacity:0.3;
+      -khtml-opacity: 0.3;
       opacity: 0.3;
 	}
 .header .top_logo{
@@ -46,7 +46,7 @@ body {margin:0 auto;overflow:hidden;}
 	top:10px;
 	left: 50%;
 	margin-left: -390px;
-	}	
+	}
 
 .header .nav{
 	width:804px;
@@ -57,12 +57,12 @@ body {margin:0 auto;overflow:hidden;}
 	left: 50%;
 	margin-left: -400px;
 	}
-.header .nav a.gv { 
-	text-decoration:none; 
-	background:url(img/nav_gv.png) repeat 0px 0px; 
-	width: 130px; 
-	height: 43px; 
-	display: block; 
+.header .nav a.gv {
+	text-decoration:none;
+	background:url(img/nav_gv.png) repeat 0px 0px;
+	width: 130px;
+	height: 43px;
+	display: block;
 	text-align:center;		/*水平居中*/
 	line-height:43px;  /*上下居中*/
 	cursor:pointer;
@@ -72,18 +72,18 @@ body {margin:0 auto;overflow:hidden;}
 	}
 .header .nav a.gv span {
 	 display: none;
-	 	
+
 }
-.header .nav a.gv:hover { 
-	background: url(img/nav_gv.png) repeat 0px -43px; 
+.header .nav a.gv:hover {
+	background: url(img/nav_gv.png) repeat 0px -43px;
 	color:#1d7eb8;
 	-webkit-box-shadow: 0 0 6px #1d7eb8;
 	transition-duration: 0.5s;
 	}
-	
+
 .header	.topcn{
 	width: 980px;
-	top:250px;
+	top:350px;
 	left: 50%;
 	margin-left: -490px;
 	position:absolute;
