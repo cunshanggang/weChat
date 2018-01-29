@@ -1,4 +1,4 @@
-body {margin:0 auto;overflow:hidden;}  
+body {margin:0 auto;overflow:hidden;}
 
 /*=============第一页=============*/	
 .header{
@@ -83,10 +83,9 @@ body {margin:0 auto;overflow:hidden;}
 	
 .header	.topcn{
 	width: 980px;
-	top:50px;
+	top:250px;
 	left: 50%;
 	margin-left: -490px;
 	position:absolute;
 	z-index:20;
-
 	}
