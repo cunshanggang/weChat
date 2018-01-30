@@ -250,7 +250,7 @@ class wechatCallbackapiTest {
                                     $role_name = $chk_res[0]['spy'];
                                     $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>"0","role_name"=>"$role_name","u_id"=>"$uid","time"=>"$join_time","order"=>"$order"]);
 
-                                    $contentStr = "http://39.108.108.194/weChat/app/undercover/show.php?keyword=".urlencode($chk_res[0]['spy'])."&type=0"."&order=$order"."&time=".urlencode($join_time);
+                                    $contentStr = "http://39.108.108.194/weChat/app/undercover/index.html?keyword=".urlencode($chk_res[0]['spy'])."&type=0"."&order=$order"."&join_time=".urlencode($join_time);
                                     $msgType = 'text';
                                     $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                                     echo $resultStr;
@@ -262,7 +262,7 @@ class wechatCallbackapiTest {
                                     //最后一个取完号码，更新undercover表的状态
                                     $GLOBALS['database']->update("undercover",["status"=>"0","luck_number"=>"0"],["id"=>"$id"]);
 
-                                    $contentStr = "http://39.108.108.194/weChat/app/undercover/show.php?keyword=".urlencode($chk_res[0]['folk'])."&type=0"."&order=$order"."&time=".urlencode($join_time);
+                                    $contentStr = "http://39.108.108.194/weChat/app/undercover/index.html?keyword=".urlencode($chk_res[0]['folk'])."&type=0"."&order=$order"."&join_time=".urlencode($join_time);
                                     $msgType = 'text';
                                     $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                                     echo $resultStr;
@@ -273,7 +273,7 @@ class wechatCallbackapiTest {
                                     $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>"0","role_name"=>"$role_name","u_id"=>"$uid","time"=>"$join_time","order"=>"$order"]);
                                     $GLOBALS['database']->update("undercover",["status"=>"0","luck_number"=>"0"],["id"=>"$id"]);
 
-                                    $contentStr = "http://39.108.108.194/weChat/app/undercover/show.php?keyword=".urlencode($chk_res[0]['spy'])."&type=0"."&order=$order"."&time=".urlencode($join_time);
+                                    $contentStr = "http://39.108.108.194/weChat/app/undercover/index.html?keyword=".urlencode($chk_res[0]['spy'])."&type=0"."&order=$order"."&join_time=".urlencode($join_time);
                                     $msgType = 'text';
                                     $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                                     echo $resultStr;
@@ -282,15 +282,14 @@ class wechatCallbackapiTest {
                                     $order = $last_order_id[0]['order']+1;
                                     $role_name = $chk_res[0]['folk'];
                                     $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>"1","role_name"=>"$role_name","u_id"=>"$chk_res[0]['id']","time"=>"$join_time","order"=>"$order"]);
-                                    $contentStr = "http://39.108.108.194/weChat/app/undercover/show.php?keyword=".urlencode($chk_res[0]['spy'])."&type=1"."&order=$order"."&time=".urlencode($join_time);
+                                    $contentStr = "http://39.108.108.194/weChat/app/undercover/index.html?keyword=".urlencode($chk_res[0]['spy'])."&type=1"."&order=$order"."&join_time=".urlencode($join_time);
                                     $msgType = 'text';
                                     $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                                     echo $resultStr;
                                 }
                             }else{
                                 //非法获取
-                                $error = "非法获取";
-                                $contentStr = "http://39.108.108.194/weChat/app/undercover/show.php?keyword=".urlencode($error)."&time=".urlencode($join_time);
+                                $contentStr = "http://39.108.108.194/weChat/app/undercover/index.html?type=2&join_time=".urlencode($join_time);
                                 $msgType = 'text';
                                 $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                                 echo $resultStr;
@@ -315,13 +314,13 @@ class wechatCallbackapiTest {
                             //插入数据到玩家player表,判断他是否为卧底,1:平民，0:卧底
                             if($luck_number == 1) {
                                 $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>0,"role_name"=>"$role_name_spy","u_id"=>"$u_id","time"=>"$join_time","order"=>1]);
-                                $contentStr = "http://39.108.108.194/weChat/app/undercover/show.php?keyword=".urlencode($spy[0]['spy'])."&type=0"."&order=1"."&time=".urlencode($join_time);
+                                $contentStr = "http://39.108.108.194/weChat/app/undercover/index.html?keyword=".urlencode($spy[0]['spy'])."&type=0"."&order=1"."&join_time=".urlencode($join_time);
                                 $msgType = 'text';
                                 $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                                 echo $resultStr;
                             }else{
                                 $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>1,"role_name"=>"$role_name_folk","u_id"=>"$u_id","time"=>"$join_time","order"=>1]);
-                                $contentStr = "http://39.108.108.194/weChat/app/undercover/show.php?keyword=".urlencode($spy[0]['folk'])."&type=1"."&order=1"."&time=".urlencode($join_time);
+                                $contentStr = "http://39.108.108.194/weChat/app/undercover/index.html?keyword=".urlencode($spy[0]['folk'])."&type=1"."&order=1"."&join_time=".urlencode($join_time);
                                 $msgType = 'text';
                                 $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                                 echo $resultStr;
