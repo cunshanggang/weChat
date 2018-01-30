@@ -262,7 +262,7 @@ class wechatCallbackapiTest {
                                     //最后一个取完号码，更新undercover表的状态
                                     $GLOBALS['database']->update("undercover",["status"=>"0","luck_number"=>"0"],["id"=>"$id"]);
 
-                                    $contentStr = "http://39.108.108.194/weChat/app/undercover/index.html?keyword=".urlencode($chk_res[0]['folk'])."&type=0"."&order=$order"."&join_time=".urlencode($join_time);
+                                    $contentStr = "http://39.108.108.194/weChat/app/undercover/index.html?keyword=".urlencode($chk_res[0]['folk'])."&type=1"."&order=$order"."&join_time=".urlencode($join_time);
                                     $msgType = 'text';
                                     $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                                     echo $resultStr;
