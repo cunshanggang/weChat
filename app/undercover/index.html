@@ -33,19 +33,23 @@
 			var role = document.getElementById("role");
 			var order = document.getElementById("order");
 			var join_time = document.getElementById("join_time");
+			var deTime = decodeURIComponent(obj.join_time);
 			if(obj.type == 1) {
 				role.innerHTML = "亲，恭喜您！您是平民！加油哦";
 				keyword.innerHTML = decodeURI(obj.keyword);
 				order.innerHTML = "第"+obj.order+"个发言";
-				join_time.innerHTML = decodeURI(obj.join_time);
+				join_time.innerHTML = deTime.replace("+"," ");
 			}else if(obj.type == 2){
 				role.innerHTML = "亲，您已经加入了战斗中...";
-				join_time.innerHTML = obj.join_time;
-			}else{
+
+				join_time.innerHTML = deTime.replace("+"," ");
+			}else if(obj.type == 0){
 				role.innerHTML = "亲，恭喜您！您是卧底！加油哦";
 				keyword.innerHTML = decodeURI(obj.keyword);
 				order.innerHTML = "第"+obj.order+"个发言";
-				join_time.innerHTML = decodeURI(obj.join_time);
+				join_time.innerHTML = deTime.replace("+"," ");
+			}else{
+				role.innerHTML = "亲，您还没有组队哦！";
 			}
 
 		}
