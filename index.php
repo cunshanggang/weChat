@@ -281,8 +281,8 @@ class wechatCallbackapiTest {
                                     //平民，又不是最后一个人
                                     $order = $last_order_id[0]['order']+1;
                                     $role_name = $chk_res[0]['folk'];
-                                    $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>"1","role_name"=>"$role_name","u_id"=>"$chk_res[0]['id']","time"=>"$join_time","order"=>"$order"]);
-                                    $contentStr = "http://39.108.108.194/weChat/app/undercover/index.html?keyword=".urlencode($chk_res[0]['spy'])."&type=1"."&order=$order"."&join_time=".urlencode($join_time);
+                                    $GLOBALS['database']->insert("player",["wxname"=>"$fromUsername","role"=>"1","role_name"=>"$role_name","u_id"=>"$uid","time"=>"$join_time","order"=>"$order"]);
+                                    $contentStr = "http://39.108.108.194/weChat/app/undercover/index.html?keyword=".urlencode($chk_res[0]['folk'])."&type=1"."&order=$order"."&join_time=".urlencode($join_time);
                                     $msgType = 'text';
                                     $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                                     echo $resultStr;
