@@ -335,6 +335,13 @@ class wechatCallbackapiTest {
             }
             //关注subscribe,取消关注unsubscribe
             if($event == 'subscribe') {
+                //插入到follow表
+                $time = date("Y-m-d H:i:s");
+                $wxname = $fromUsername;
+                $r = $GLOBALS['database']->select("follower","*",["wxname"=>"$wxname"]);
+                if(empty($r)){
+                    $GLOBALS['database']->insert("follower",["wxname"=>"$wxname","time"=>"$time"]);
+                }
                 $contentStr = "Hi,欢迎关注jamess公众号，期待您的到来!";
                 $msgType = 'text';
                 $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
