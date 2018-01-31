@@ -149,6 +149,27 @@ class wechatCallbackapiTest {
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
                         break;
+                    case "真心话大冒险语音类":
+                        //统计总数
+                        $count = $GLOBALS['database']->count("true_or_dare","*");
+                        //随机抽取一个
+                        $rand = rand(1,$count);
+                        $r = $GLOBALS['database']->select("true_or_dare","*",["and"=>["id"=>"$rand","type"=>"1"]]);
+                        $content = $r[0]['content'];
+                        $wxname = $fromUsername;
+                        $time = date("Y-m-d H:i:s");
+                        //次数
+                        $times = ($r[0]['times']+1);
+                        //插入到true_player表中
+                        $GLOBALS['database']->insert("true_player",["u_id"=>"$rand","wxname"=>"$wxname","content"=>"$content","time"=>"$time"]);
+                        //更新ture_or_dare表的次数
+                        $GLOBALS['database']->update("true_or_dare",["times"=>"$times"],["id"=>"$rand"]);
+                        //返回结果给用户
+                        $contentStr = "真心话大冒险语音类:\n\r".$content;
+                        $msgType = "text";
+                        $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                        echo $resultStr;
+                        break;
 //                    default:
 //                        $contentStr = "亲,请输入关键字哦".$this->emoji($emoji_str = "/::D");
 //                        $msgType = "text";
