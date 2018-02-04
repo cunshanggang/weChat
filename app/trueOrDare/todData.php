@@ -5,7 +5,7 @@
  * Date: 2018/2/2
  * Time: 9:46
  */
-require_once '../app/database.php';
+require_once '../database.php';
 //echo "<pre>";
 //print_r($_POST);
 //echo "</pre>";
