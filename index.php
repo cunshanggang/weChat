@@ -155,7 +155,7 @@ class wechatCallbackapiTest {
                         //随机抽取一个
                         $rand = rand(1,$count);
                         $r = $GLOBALS['database']->select("true_or_dare","*",["and"=>["id"=>"$rand","type"=>"1"]]);
-//                        $content = $r[0]['content'];
+                        $content = $r[0]['content'];
                         $id = $r[0]['id'];
                         $type = $r[0]['type'];
                         $wxname = $fromUsername;
