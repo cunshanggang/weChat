@@ -150,10 +150,8 @@ class wechatCallbackapiTest {
                         echo $resultStr;
                         break;
                     case "真心话大冒险语音类":
-                        //统计总数
-                        $count = $GLOBALS['database']->count("true_or_dare","*");
-                        //随机抽取一个
-                        $rand = rand(1,$count);
+                        $ids = $GLOBALS['database']->select("true_or_dare","id",["type"=>1]);
+                        $rand = $ids[array_rand($ids,1)];
                         $r = $GLOBALS['database']->select("true_or_dare","*",["and"=>["id"=>"$rand","type"=>"1"]]);
                         $content = $r[0]['content'];
                         $id = $r[0]['id'];
