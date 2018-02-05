@@ -191,6 +191,27 @@ class wechatCallbackapiTest {
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
                         break;
+                    case "真心话大冒险惩罚类":
+                        $ids = $GLOBALS['database']->select("true_or_dare","id",["type"=>3]);
+                        $rand = $ids[array_rand($ids,1)];
+                        $r = $GLOBALS['database']->select("true_or_dare","*",["and"=>["id"=>"$rand","type"=>"3"]]);
+                        $content = $r[0]['content'];
+                        $id = $r[0]['id'];
+                        $type = $r[0]['type'];
+                        $wxname = $fromUsername;
+                        $time = date("Y-m-d H:i:s");
+                        //次数
+                        $times = ($r[0]['times']+1);
+                        //插入到true_player表中
+                        $GLOBALS['database']->insert("true_player",["u_id"=>"$rand","wxname"=>"$wxname","content"=>"$content","time"=>"$time"]);
+                        //更新ture_or_dare表的次数
+                        $GLOBALS['database']->update("true_or_dare",["times"=>"$times"],["id"=>"$rand"]);
+                        //返回结果给用户
+                        $contentStr = "真心话大冒险提问类:\n\r"."http://39.108.108.194/weChat/app/trueOrDare/index.html?type=$type&id=$id";
+                        $msgType = "text";
+                        $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                        echo $resultStr;
+                        break;
 //                    default:
 //                        $contentStr = "亲,请输入关键字哦".$this->emoji($emoji_str = "/::D");
 //                        $msgType = "text";
