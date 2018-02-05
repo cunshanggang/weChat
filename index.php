@@ -173,7 +173,7 @@ class wechatCallbackapiTest {
                     case "真心话大冒险提问类":
                         $ids = $GLOBALS['database']->select("true_or_dare","id",["type"=>2]);
                         $rand = $ids[array_rand($ids,1)];
-                        $r = $GLOBALS['database']->select("true_or_dare","*",["and"=>["id"=>"$rand","type"=>"1"]]);
+                        $r = $GLOBALS['database']->select("true_or_dare","*",["and"=>["id"=>"$rand","type"=>"2"]]);
                         $content = $r[0]['content'];
                         $id = $r[0]['id'];
                         $type = $r[0]['type'];
@@ -186,7 +186,7 @@ class wechatCallbackapiTest {
                         //更新ture_or_dare表的次数
                         $GLOBALS['database']->update("true_or_dare",["times"=>"$times"],["id"=>"$rand"]);
                         //返回结果给用户
-                        $contentStr = "真心话大冒险语音类:\n\r"."http://39.108.108.194/weChat/app/trueOrDare/index.html?type=$type&id=$id";
+                        $contentStr = "真心话大冒险提问类:\n\r"."http://39.108.108.194/weChat/app/trueOrDare/index.html?type=$type&id=$id";
                         $msgType = "text";
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
