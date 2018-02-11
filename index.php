@@ -131,6 +131,12 @@ class wechatCallbackapiTest {
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
                         break;
+                    case "在线投票统计":
+                        $contentStr = "请点击一下链接进行统计:\r\nhttp://39.108.108.194/weChat/app/vote/index.html";
+                        $msgType = "text";
+                        $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                        echo $resultStr;
+                        break;
                     case "脑筋急转弯":
                         $id = rand(1,225);
                         //注：$id要加“”，否则查询不到数据。

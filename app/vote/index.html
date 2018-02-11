@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度Echarts</title>
+    <script type="text/javascript" src="js/echarts.js"></script>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width: 300px;height:200px;"></div>
+<div id="main1" style="width: 300px;height:200px;"></div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('main'));
+    var myChart1 = echarts.init(document.getElementById('main1'));
+    var arr = [1,2,3,4,5,6,7];
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: 'ECharts 入门示例',
+            textStyle:{
+                //文字颜色
+                color:'#000',
+                //字体风格,'normal','italic','oblique'
+                fontStyle:'normal',
+                //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
+                fontWeight:'bold',
+                //字体系列
+                fontFamily:'sans-serif',
+                //字体大小
+                fontSize:12
+            }
+        },
+        tooltip: {show:true},
+        legend: {
+            data:['票数']
+        },
+        xAxis: {
+            data: ["1号","2号","3号","4号","5号","6号","7号"]
+        },
+        yAxis: {min:0,max:6},
+        series: [{
+            name: '票数',
+            type: 'bar',
+            data: [1, 2, 1, 1, 1, 1,0],
+            //设置柱子的宽度
+            barWidth : 30,
+            itemStyle:{
+                normal:{
+                    color:'#4ad2ff'
+                }
+            }
+        }]
+        //控制边距　
+//        grid: {
+//            left: '0%',
+//            right:'10%',
+//            containLabel: true
+//        }
+    };
+
+    var option1 = {
+        title: {
+            text: 'ECharts 入门示例'
+        },
+        tooltip: {show:true},
+        legend: {
+            data:['票数']
+        },
+        xAxis: {
+            data: ["1号","2号","3号","4号","5号","6号","7号"]
+        },
+        yAxis: {min:0,max:6},
+        series: [{
+            name: '票数',
+            type: 'bar',
+            data: [1, 2, 1, 1, 1, 1,0]
+        }]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+    myChart1.setOption(option1);
+</script>
+</body>
+</html>
