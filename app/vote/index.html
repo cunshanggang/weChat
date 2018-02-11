@@ -2,85 +2,293 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>百度Echarts</title>
+    <title>百度Echarts 测试版</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/echarts.js"></script>
+    <style type="text/css">
+        .mgTop{margin-top:50px;}
+        .mgtop10{margin-top:10px;}
+        .wd{width:260px;}
+    </style>
 </head>
 <body>
-<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-<div id="main" style="width: 300px;height:200px;"></div>
-<div id="main1" style="width: 300px;height:200px;"></div>
+<div class="page-header">
+    <h1>谁是卧底 <small>在线统计投票</small></h1>
+</div>
+<!--提交投票人数 start-->
+<div class="container mgTop" id="myCon">
+    <div class="col-lg-4 col-sm-3"></div>
+    <form class="form-inline">
+        <div class="form-group">
+            <label class="sr-only" for="inputAmount"></label>
+            <div class="input-group">
+                <div class="input-group-addon">共</div>
+                <input type="text" class="form-control" id="inputAmount" placeholder="人数">
+                <div class="input-group-addon">人</div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" id="btnPeople">提交</button>
+    </form>
+</div>
+<!--提交投票人数 end-->
+<!--输入投票结果 start-->
+<div class="container mgTop">
+    <div class="row">
+        <div class="col-md-4 col-sm-4"></div>
+        <div class="col-md-4 col-sm-4">
+            <form class="form-inline" id="iptVote" method="post">
+
+            </form>
+        </div>
+
+    </div>
+
+</div>
+<!--输入投票结果 end-->
+<!-- 为ECharts准备一个具备大小（宽高）的Dom start-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-sm-4"></div>
+        <div class="col-md-8 col-sm-8" id="showRes">
+            <div id="main1" style="width:400px;height:300px;"></div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('main'));
-    var myChart1 = echarts.init(document.getElementById('main1'));
-    var arr = [1,2,3,4,5,6,7];
-    // 指定图表的配置项和数据
-    var option = {
-        title: {
-            text: 'ECharts 入门示例',
-            textStyle:{
-                //文字颜色
-                color:'#000',
-                //字体风格,'normal','italic','oblique'
-                fontStyle:'normal',
-                //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
-                fontWeight:'bold',
-                //字体系列
-                fontFamily:'sans-serif',
-                //字体大小
-                fontSize:12
+    $(document).ready(function () {
+        var oIptVote = $("#iptVote");
+        var oBtnPeople = $("#btnPeople");
+        //提交投票人数并生成投票输入框 start
+        oBtnPeople.on("click",function (e) {
+            var sInputAmount = $("#inputAmount").val();
+//                alert(sInputAmount);
+            if(!isNaN(sInputAmount) && (sInputAmount!='')) {
+//                    alert(sInputAmount);
+                var oMyCon = $("#myCon");
+                //1.要添加表单默认提交:e.preventDefault(),否则会出现页面刷新
+                //2.不添加避免默认事件，需要把submit改为button
+//                    oMyCon.css({"display":"none"});
+                oMyCon.hide();//隐藏输入框
+
+                var strHtml="";
+
+                //生成提交投票表单
+                for(var i=1;i<=sInputAmount;i++) {
+                    strHtml+="<div class='input-group mgtop10 wd'><div class='input-group-addon'>"+i+"号</div><div class='input-group-addon'><span class='label label-success'>投</span></div><input type='text' class='form-control' name='order_"+i+"' id='order_"+i+"' placeholder=''></div>";
+                }
+
+                strHtml+="<button type='submit' onclick='test(event)' class='btn btn-primary mgtop10 col-sm-offset-4' id='vote'>提交</button>";
+//                    alert(strHtml);
+                oIptVote.html(strHtml);
+
+            }else{
+                alert("请正确输入!");
             }
-        },
-        tooltip: {show:true},
-        legend: {
-            data:['票数']
-        },
-        xAxis: {
-            data: ["1号","2号","3号","4号","5号","6号","7号"]
-        },
-        yAxis: {min:0,max:6},
-        series: [{
-            name: '票数',
-            type: 'bar',
-            data: [1, 2, 1, 1, 1, 1,0],
-            //设置柱子的宽度
-            barWidth : 30,
-            itemStyle:{
-                normal:{
-                    color:'#4ad2ff'
+            e.preventDefault();
+        });
+        //提交投票人数并生成投票输入框 start
+//                var oVote = $("#vote");
+//                oVote.on("click",function () {
+//                    alert(222);
+        //避免默认事件
+//                });
+        //获取提交的票数 start
+
+        //获取提交的票数 end
+    });
+
+    //        $(document).ready(function () {
+    ////            var oVote = $("#vote");
+    //            $("#vote").on("click",function () {
+    //                alert(222);
+    //                //避免默认事件
+    ////                e.preventDefault();
+    //            });
+    //        });
+    function test(e){
+
+//            alert(e);
+//            alert(typeof(e));
+        var jsonData = $("#iptVote").serializeArray();
+//            console.log(jsonData);
+//        alert(jsonData.length);//获取对象的长度
+//            alert(jsonData[0]['value']);
+        var data = new Array();
+        var voteData = [];
+        for(var i=0;i<jsonData.length;i++) {
+            if(jsonData[i]['value'] > jsonData.length) {
+                alert("请正确输入!");
+                return e.preventDefault();//避免提交
+            }
+            //将票数保存到数组中
+            if(jsonData[i]['value'] != "") {
+                voteData[i] = jsonData[i]['value'];
+            }
+            //不为空才插入到数组中
+            if(jsonData[i]['value'] != "") {
+                //获取数组的索引值：arr.indexOf(arr[i])
+                data.push(jsonData.indexOf(jsonData[i]));//保存数组的索引值
+            }
+            //判断是否为数字
+            if(isNaN(jsonData[i]['value'])) {
+                alert("请正确输入!");
+                return e.preventDefault();//避免提交
+            }
+            //判断是不是自己投自己
+            if(jsonData[i]['value'] == (i+1)) {
+                alert("请正确输入!");
+                return e.preventDefault();//避免提交
+            }
+//            data[i] = jsonData[i]['value'];
+        }
+//            console.log(data);
+//        console.log(jsonData);
+        //获取索引值
+//        console.log(data);
+//        alert(data.length);
+        //x轴坐标
+        var xData = new Array();
+//        console.log(data);
+        for(var j=0;j<data.length;j++) {
+            xData[j] = data[j]+1+"号";//将索引值加1作为x轴
+        }
+//        console.log(xData);
+        //y轴的数据
+        var yData = new Array();
+        //js 数组初始化长度指定为0
+        for(var n=0;n<voteData.length;n++) {
+            yData[n] = 0;
+        }
+        //统计票数
+//        console.log(xData);
+//        console.log(jsonData);
+//        console.log(voteData);
+//        console.log(data);
+        //将字符型数字转换成数字型
+        for(var k=0;k<voteData.length;k++) {
+            voteData[k] = parseInt(voteData[k]-1);//将投票的序号减1,方便数组统计票数。
+//            voteDataInt[k] = voteData[k];
+        }
+
+//        console.log(voteData);
+//        alert((0 == 0));
+        for(var l=0;l<data.length;l++) {
+            for(var m=0;m<voteData.length;m++){
+                if(data[l] == voteData[m]) {
+                    yData[l] = yData[l]+1;
                 }
             }
-        }]
-        //控制边距　
-//        grid: {
-//            left: '0%',
-//            right:'10%',
-//            containLabel: true
-//        }
-    };
+        }
+//        console.log(yData);
+//        console.log(yData);
+        //创建条形图
+        var showRes = $("#showRes");
+        showRes.prepend('<hr><div id="main" style="width:400px;height:300px;"></div>');
+        //显示条形图 start
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '投票结果展示',
+                textStyle:{
+                    //文字颜色
+                    color:'#000',
+                    //字体风格,'normal','italic','oblique'
+                    fontStyle:'normal',
+                    //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
+                    fontWeight:'bold',
+                    //字体系列
+                    fontFamily:'sans-serif',
+                    //字体大小
+                    fontSize:12
+                }
+            },
+            tooltip: {},
+            legend: {
+                data:['票数']
+            },
+            xAxis: {
+//                data: ["1号","2号","3号","4号","5号","6号","7号"]
+                data:xData
+            },
+            yAxis: {type:'value',minInterval:1,min:0,max:(data.length-1)},
+            series: [{
+                name: '票数',
+                type: 'bar',
+//                data: [1, 2, 1],
+                data:yData,
+                //设置柱子的宽度
+                barWidth : 30,
+                itemStyle:{
+                    normal:{
+                        color:'#4ad2ff'
+                    }
+                }
+            }]
+        };
 
-    var option1 = {
-        title: {
-            text: 'ECharts 入门示例'
-        },
-        tooltip: {show:true},
-        legend: {
-            data:['票数']
-        },
-        xAxis: {
-            data: ["1号","2号","3号","4号","5号","6号","7号"]
-        },
-        yAxis: {min:0,max:6},
-        series: [{
-            name: '票数',
-            type: 'bar',
-            data: [1, 2, 1, 1, 1, 1,0]
-        }]
-    };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        //显示条形图 end
+        e.preventDefault();
+    }
 
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
-    myChart1.setOption(option1);
 </script>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom end-->
+<!--<script type="text/javascript">-->
+    <!--// 基于准备好的dom，初始化echarts实例-->
+    <!--var myChart = echarts.init(document.getElementById('main'));-->
+    <!--// 指定图表的配置项和数据-->
+    <!--var option = {-->
+        <!--title: {-->
+            <!--text: 'ECharts 入门示例',-->
+            <!--textStyle:{-->
+                <!--//文字颜色-->
+                <!--color:'#000',-->
+                <!--//字体风格,'normal','italic','oblique'-->
+                <!--fontStyle:'normal',-->
+                <!--//字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...-->
+                <!--fontWeight:'bold',-->
+                <!--//字体系列-->
+                <!--fontFamily:'sans-serif',-->
+                <!--//字体大小-->
+                <!--fontSize:12-->
+            <!--}-->
+        <!--},-->
+        <!--tooltip: {show:true},-->
+        <!--legend: {-->
+            <!--data:['票数']-->
+        <!--},-->
+        <!--xAxis: {-->
+            <!--data: ["1号","2号","3号","4号","5号","6号","7号"]-->
+        <!--},-->
+        <!--yAxis: {min:0,max:6},-->
+        <!--series: [{-->
+            <!--name: '票数',-->
+            <!--type: 'bar',-->
+            <!--data: [1, 2, 1, 1, 1, 1,0],-->
+            <!--//设置柱子的宽度-->
+            <!--barWidth : 30,-->
+            <!--itemStyle:{-->
+                <!--normal:{-->
+                    <!--color:'#4ad2ff'-->
+                <!--}-->
+            <!--}-->
+        <!--}]-->
+        <!--//控制边距　-->
+<!--//        grid: {-->
+<!--//            left: '0%',-->
+<!--//            right:'10%',-->
+<!--//            containLabel: true-->
+<!--//        }-->
+    <!--};-->
+
+
+    <!--// 使用刚指定的配置项和数据显示图表。-->
+    <!--myChart.setOption(option);-->
+<!--</script>-->
 </body>
 </html>
