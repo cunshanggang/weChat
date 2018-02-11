@@ -108,7 +108,8 @@
     //            });
     //        });
     function test(e){
-
+        //获得id相同的div的个数
+        var round = $("#main").length+1;
 //            alert(e);
 //            alert(typeof(e));
         var jsonData = $("#iptVote").serializeArray();
@@ -192,7 +193,7 @@
         // 指定图表的配置项和数据
         var option = {
             title: {
-                text: '投票结果展示',
+                text: '第'+round+'投票结果展示',
                 textStyle:{
                     //文字颜色
                     color:'#000',
