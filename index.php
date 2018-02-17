@@ -218,7 +218,7 @@ class wechatCallbackapiTest {
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
                         break;
-                    case "谁是卧底及规则":
+                    case "谁是卧底":
                         $contentStr = "谁是卧底:\n\r"."http://39.108.108.194/weChat/app/undercover/index.html\n\r谁是卧底规则:\n\r游戏人数：最好7个游戏者，1个卧底，若干不明的围观者。
 游戏规则：
 1、在场7个人中6个人拿到相同的一个词语，剩下的1个拿到与之相关的另一个词语；
