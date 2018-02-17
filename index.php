@@ -218,6 +218,18 @@ class wechatCallbackapiTest {
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
                         break;
+                    case "谁是卧底及规则":
+                        $contentStr = "谁是卧底:\n\r"."http://39.108.108.194/weChat/app/trueOrDare/index.html\n\r谁是卧底规则:\n\r游戏人数：最好7个游戏者，1个卧底，若干不明的围观者。
+游戏规则：
+1、在场7个人中6个人拿到相同的一个词语，剩下的1个拿到与之相关的另一个词语；
+2、每人每轮只能说一句话描述自己拿到的词语（不能直接说出来那个词语），与不能让卧底发现，也要给同胞以暗示。
+3、每轮描述完毕，7人投票选出怀疑是卧底的那个人，得票数最多的人出局，俩个人一样多的话，待定（就是保留）。
+4、若有卧底撑到剩下最后三人，则卧底获胜，反之，则大部队获胜。
+5、选择词语的话要选择有关的词语好，比如胡子和眉毛，猪肉和牛肉等等。";
+                        $msgType = "text";
+                        $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
+                        echo $resultStr;
+                        break;
 //                    default:
 //                        $contentStr = "亲,请输入关键字哦".$this->emoji($emoji_str = "/::D");
 //                        $msgType = "text";
