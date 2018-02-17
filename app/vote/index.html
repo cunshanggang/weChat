@@ -11,11 +11,12 @@
         .mgTop{margin-top:50px;}
         .mgtop10{margin-top:10px;}
         .wd{width:260px;}
+        .mgLeft{margin-left:100px;}
     </style>
 </head>
 <body>
 <div class="page-header">
-    <h1>谁是卧底 <small>在线统计投票</small></h1>
+    <h1>谁是卧底 <small>在线统计投票</small><button class="btn btn-primary mgLeft" id="btnRef">刷新</button></h1>
 </div>
 <!--提交投票人数 start-->
 <div class="container mgTop" id="myCon">
@@ -60,6 +61,11 @@
     $(document).ready(function () {
         var oIptVote = $("#iptVote");
         var oBtnPeople = $("#btnPeople");
+        var oBtnRefresh = $("#btnRef");
+        //刷新页面
+        oBtnRefresh.on("click",function () {
+            location.reload();
+        });
         //提交投票人数并生成投票输入框 start
         oBtnPeople.on("click",function (e) {
             var sInputAmount = $("#inputAmount").val();
