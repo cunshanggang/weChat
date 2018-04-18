@@ -132,13 +132,13 @@ class wechatCallbackapiTest {
                         echo $resultStr;
                         break;
                     case "幸运大转盘":
-                        $contentStr = "请点击一下链接进行抽奖:\r\n"."<a href='http://39.108.108.194/weChat/app/spinwin/index.html'>请点击这里</a>";
+                        $contentStr = "请点击一下链接进行抽奖:\r\nhttp://39.108.108.194/weChat/app/spinwin/index.html";
                         $msgType = "text";
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
                         break;
                     case "在线投票统计":
-                        $contentStr = "请点击一下链接进行统计:\r\n"."<a href='http://39.108.108.194/weChat/app/vote/index.html'>请点击这里</a>";
+                        $contentStr = "请点击一下链接进行统计:\r\nhttp://39.108.108.194/weChat/app/vote/index.html";
                         $msgType = "text";
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
@@ -177,7 +177,7 @@ class wechatCallbackapiTest {
                         //更新ture_or_dare表的次数
                         $GLOBALS['database']->update("true_or_dare",["times"=>"$times"],["id"=>"$rand"]);
                         //返回结果给用户
-                        $contentStr = "真心话大冒险语音类:\n\r"."<a href='http://39.108.108.194/weChat/app/trueOrDare/index.html?type=$type&id=$id'>请点击这里</a>";
+                        $contentStr = "真心话大冒险语音类:\n\r"."http://39.108.108.194/weChat/app/trueOrDare/index.html?type=$type&id=$id";
                         $msgType = "text";
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
@@ -198,7 +198,7 @@ class wechatCallbackapiTest {
                         //更新ture_or_dare表的次数
                         $GLOBALS['database']->update("true_or_dare",["times"=>"$times"],["id"=>"$rand"]);
                         //返回结果给用户
-                        $contentStr = "真心话大冒险提问类:\n\r"."<a href='http://39.108.108.194/weChat/app/trueOrDare/index.html?type=$type&id=$id'>请点击这里</a>";
+                        $contentStr = "真心话大冒险提问类:\n\r"."http://39.108.108.194/weChat/app/trueOrDare/index.html?type=$type&id=$id";
                         $msgType = "text";
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
@@ -219,13 +219,13 @@ class wechatCallbackapiTest {
                         //更新ture_or_dare表的次数
                         $GLOBALS['database']->update("true_or_dare",["times"=>"$times"],["id"=>"$rand"]);
                         //返回结果给用户
-                        $contentStr = "真心话大冒险惩罚类:\n\r"."<a href='http://39.108.108.194/weChat/app/trueOrDare/index.html?type=$type&id=$id'>请点击这里</a>";
+                        $contentStr = "真心话大冒险惩罚类:\n\r"."http://39.108.108.194/weChat/app/trueOrDare/index.html?type=$type&id=$id";
                         $msgType = "text";
                         $resultStr = sprintf($this->textTpl(), $fromUsername, $toUsername, $time, $msgType, $contentStr);
                         echo $resultStr;
                         break;
                     case "谁是卧底":
-                        $contentStr = "谁是卧底:\n\r"."<a href='http://39.108.108.194/weChat/app/undercover/index.html'>请点击这里</a>"."\n\r谁是卧底规则:\n\r游戏人数：最好7个游戏者，1个卧底，若干不明的围观者。
+                        $contentStr = "谁是卧底:\n\r"."http://39.108.108.194/weChat/app/undercover/index.html\n\r谁是卧底规则:\n\r游戏人数：最好7个游戏者，1个卧底，若干不明的围观者。
 游戏规则：
 1、在场7个人中6个人拿到相同的一个词语，剩下的1个拿到与之相关的另一个词语；
 2、每人每轮只能说一句话描述自己拿到的词语（不能直接说出来那个词语），也不能让卧底发现，也要给同胞以暗示。
