@@ -6,6 +6,7 @@
  * Time: 13:42
  */
 require_once '../app/database.php';
+date_default_timezone_set('PRC');
 //获取undercover的id
 $result       = $GLOBALS['database']->select("undercover",["id"],["status"=>1]);
 $uid          = $result[0]['id'];
