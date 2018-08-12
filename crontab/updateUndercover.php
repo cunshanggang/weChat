@@ -14,7 +14,7 @@ print_r($result);
 echo $uid;
 unset($result);
 //获取第一个发起游戏的人的时间
-$result       = $GLOBALS['database']->debug()->select("player",["time"],["AND"=>["u_id"=>"$uid","`order`"=>1]]);
+$result       = $GLOBALS['database']->query("SELECT * FROM player WHERE u_id = {$uid} AND `order`=1");
 print_r($result);
 $startTime    = $result[0]['time'];
 //获取当前时间
