@@ -25,5 +25,5 @@ echo "<hr>";
 $deadline     = strtotime($startTime) + 3600*10;
 echo $deadline;
 if($time > $deadline) {
-    $GLOBALS['database']->update("undercover",["status"=>0],["status"=>1]);
+    # $GLOBALS['database']->update("undercover",["status"=>0],["status"=>1]);
 }
