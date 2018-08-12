@@ -6,7 +6,6 @@
  * Time: 13:42
  */
 require_once '../app/database.php';
-date_default_timezone_set('PRC');
 //获取undercover的id
 $result       = $GLOBALS['database']->select("undercover",["id"],["status"=>1]);
 $uid          = $result[0]['id'];
@@ -23,7 +22,7 @@ $time         = time();
 echo $startTime;
 echo "<hr>";
 //十分钟更新
-$deadline     = strtotime($startTime) + 3600*10;
+$deadline     = strtotime($startTime) + 60*10;
 echo $deadline;
 if($time > $deadline) {
     # $GLOBALS['database']->update("undercover",["status"=>0],["status"=>1]);
