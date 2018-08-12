@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>真心话大冒险</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <style type="text/css">
+        .img-circle{border-radius:50%;}
+        .modal-body{font-size:48px;}
+        #myImg{margin-top:50px;}
+    </style>
+    <script type="text/javascript">
+        //获取url参数
+        function getValue(url){
+            //首先获取地址
+            var url = url || window.location.href;
+            //获取传值
+            var arr = url.split("?");
+            //判断是否有传值
+            if(arr.length == 1){
+                return null;
+            }
+            //获取get传值的个数
+            var value_arr = arr[1].split("&");
+            //循环生成返回的对象
+            var obj = {};
+            for(var i = 0; i < value_arr.length; i++){
+                var key_val = value_arr[i].split("=");
+                obj[key_val[0]]=key_val[1];
+            }
+            return obj;
+        }
+
+        //实现动态效果
+        function _go(sts){
+            var  type = sts?1:-1;
+            $('#myImg').animate({width:260 + type * 20 ,height:260 + type * 20},1000,"linear",function(){
+                _go(!sts);
+            })
+        }
+        $(document).ready(function () {
+            _go();
+//            alert(11111);
+            var oContent = $("#content");
+            var result = getValue();
+//            console.log(result);
+//            alert(oContent);
+//            alert(result.id);
+//            alert(result.type);
+            var id = result.id;
+            var type = result.type;
+            $.ajax({
+                type:"POST",
+                url:"todData.php",
+                data:"type="+type+"&id="+id,
+                success:function(msg){
+//                    alert("ddddddddd");
+//                    alert(msg);
+                    var res_data = eval("("+msg+")");
+//                    alert(res_data[0].content);
+                    var myModalLabel = $("#myModalLabel");
+                    var data_type = res_data[0].type;//返回的数据类型是string,如果是数字不是整型
+//                    alert(data_type);
+                    switch (data_type) {
+                        case "1"://如果不是整型的，必须要加双引号""
+                            title = "亲，这是真心话大冒险语音类题目:";
+//                            alert(title);
+                            break;
+                        case "2":
+                            title = "亲，这是真心话大冒险提问类题目:";
+                            break;
+                        case "3":
+                            title = "亲，这是真心话大冒险惩罚类题目:";
+                            break;
+                        default :
+                            title = "非法输入!";
+//                            alert(title);
+                    }
+//                    if(data_type == 1) {
+//                        title = "True or Dare Audio";
+//                        alert(title);
+//                    }
+//                    alert(title);
+
+                    myModalLabel.html(title);
+                    oContent.html(res_data[0].content);
+                }
+
+
+            });
+        });
+
+
+    </script>
+</head>
+<body>
+<!--背景音乐 start-->
+<audio autoplay="autoplay">
+    <source src="audio/yourSmile.mp3" type="audio/mpeg">
+</audio>
+<!--背景音乐 end-->
+    <!--<div class="container">-->
+        <!--<div class="col-lg-3 col-sm-3"></div>-->
+        <!--<img src="img/logo.jpg" alt="">-->
+    <!--</div>-->
+<img id="myImg" src="img/open.png" alt="..." class="img-circle" data-toggle="modal" data-target="#myModal">
+<!-- Button trigger modal -->
+<div class="col-lg-5 col-sm-4"></div>
+<!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">-->
+    <!--&lt;!&ndash;<img src="img/open.png" alt="..." class="img-circle">&ndash;&gt;-->
+
+<!--</button>-->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">非法输入!</h4>
+            </div>
+            <div class="modal-body" id="content">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
